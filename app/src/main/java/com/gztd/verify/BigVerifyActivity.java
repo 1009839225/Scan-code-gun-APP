@@ -335,7 +335,7 @@ public class BigVerifyActivity extends AppCompatActivity {
         return matcher.find();
     }
 
-    //纸盒条码表体标题
+    //纸盒条码表体标题显示
     private void tableview_zhtm() {
         //纸盒条码
         RelativeLayout rl_zhtm = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
