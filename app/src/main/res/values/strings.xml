@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">佛山通宝精密</string>
+    <string name="action_settings">Settings</string>
+    <!-- 选项卡 -->
+    <string name="list">版本</string>
+    <string name="vouchar">主页面</string>
+    <string name="other">注销</string>
+
+    <!-- 列表界面按钮 -->
+    <string name="list_download">载入</string>
+    <string name="list_inventory">盘点</string>
+    <string name="list_delete">删单</string>
+    <string name="list_upload">上传</string>
+    <!-- 产品入库按钮 -->
+    <string name="vouchar_state">状态</string>
+    <string name="bt_sama">扫码</string>
+    <string name="bt_sama_id">请输入采购到货订单</string>
+    <string name="vouchar_delete">删行</string>
+    <!-- 程序名字 -->
+    <string name="top_bar_name">佛山通宝精密</string>
+    <string name="top_bar_name_hd">扫码核对</string>
+    <string name="top_bar_name_fh">扫码发货</string>
+    <string name="top_bar_name_pd">扫码盘点</string>
+
+    <!-- 列表界面表格字段 -->
+    <string name="inventory_id">盘点单号</string>
+    <string name="inventory_statement">范围描述</string>
+    <string name="inventory_date">单据日期</string>
+    <string name="inventory_demo">备注</string>
+    <!-- 单据界面表格字段 -->
+    <string name="inventory_state">盘点状态</string>
+    <string name="inventory_Fixed_Id">固定资产编号</string>
+    <string name="inventory_Fixed_Name">固定资产名称</string>
+    <string name="inventory_Fixed_Specifications">规格型号</string>
+    <string name="inventory_title"> [盘点单列表]</string>
+    <string name="scan_id">条码：</string>
+    <string name="id">内容：</string>
+    <string name="show_result">结果：</string>
+
+</resources>

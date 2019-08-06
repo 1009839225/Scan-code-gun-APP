@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical" >
+    <FrameLayout
+        android:id="@+id/l_fl_wdyw"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/text_sao"
+         android:visibility="gone"
+         >
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="left"
+            android:src="@drawable/sao3" />
+
+        <TextView
+            android:id="@+id/o_tv_wdyw3"
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:paddingTop="13dp"
+            android:text="扫一扫"
+            android:textSize="20dp" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="当前版本为2.0.0" />
+    
+</LinearLayout>

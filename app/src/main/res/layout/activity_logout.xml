@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/o_fl_wdyw"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/bg_color"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:src="@drawable/frist1" />
+
+        <TextView
+            android:id="@+id/o_tv_wdyw"
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:paddingTop="13dp"
+            android:text="Web配置"
+            android:textSize="20dp" />
+    </FrameLayout>
+
+    <LinearLayout
+        style="@style/InputBoxStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用户ID：" />
+
+        <EditText
+            style="@style/EditTextStyle"
+            android:id="@+id/a_ed_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.57"
+            android:ems="10"
+            android:hint=""
+            android:singleLine="true">
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/InputBoxStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="密    码：" />
+
+        <EditText
+            style="@style/EditTextStyle"
+            android:id="@+id/a_ed_pw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint=""
+            android:inputType="textPassword"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/o_fl_wdyw1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp">
+
+        <Button
+            android:id="@+id/bt_login"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:background="@drawable/blue_button"
+            android:text="退出账号"
+            android:textColor="#ffffff" />
+    </FrameLayout>
+
+</LinearLayout>

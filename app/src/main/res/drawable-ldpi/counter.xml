@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+       <item android:state_pressed="false">
+       <!-- 定义当button 处于非pressed 状态时的形态。-->
+       <shape 
+           android:shape="oval">
+           <!-- 设置填充颜色 -->
+		<solid
+			android:color="#ffffff"/> 
+			<!-- 设置边框 --> 
+           <stroke android:width="5px" 
+                   android:color="#00000000" />
+       </shape>
+   </item>
+</selector> 
