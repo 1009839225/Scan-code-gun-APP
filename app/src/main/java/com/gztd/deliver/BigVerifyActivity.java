@@ -235,7 +235,7 @@ public class BigVerifyActivity extends Activity {
         tableview_zhtm();
     }
 
-    //纸盒条码表体标题显
+    //纸盒条码表体标题显示
     private void tableview_zhtm() {
         rl_zhtm = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
         MyTableTextView1 title = rl_zhtm.findViewById(R.id.list_1_1);
