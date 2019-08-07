@@ -276,4 +276,10 @@ public class BigVerifyActivity extends Activity {
         title.setFocusableInTouchMode(false);
         tb_zhtm.addView(rl_zhtm);
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(BigVerifyActivity.this,MainActivity.class);
+        finish();
+        startActivity(intent);
+    }
 }

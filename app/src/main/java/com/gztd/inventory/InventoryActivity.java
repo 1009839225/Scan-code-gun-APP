@@ -267,4 +267,10 @@ public class InventoryActivity extends Activity {
         title.setFocusableInTouchMode(false);
         tb_djtm.addView(rl_smpd);
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(InventoryActivity.this,MainActivity.class);
+        finish();
+        startActivity(intent);
+    }
 }

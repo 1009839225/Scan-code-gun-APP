@@ -284,4 +284,10 @@ public class SmallVerifyActivity extends Activity {
         title.setFocusableInTouchMode(false);
         tb_wlbq.addView(rl_wlbq);
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SmallVerifyActivity.this,BigVerifyActivity.class);
+        finish();
+        startActivity(intent);
+    }
 }
