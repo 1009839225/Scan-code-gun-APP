@@ -164,4 +164,11 @@ public class DeployActivity extends Activity {
         d_ed_wb.setText(data.get("userwb"));
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(DeployActivity.this,LoginActiviy.class);
+        finish();
+        startActivity(intent);
+    }
+
 }
