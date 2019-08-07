@@ -150,9 +150,9 @@ public class DeployActivity extends Activity {
 
         private void back() {
             // TODO Auto-generated method stub
-            Intent int2 = new Intent(DeployActivity.this, LoginActiviy.class);
+            Intent intent = new Intent(DeployActivity.this, LoginActiviy.class);
             finish();
-            startActivity(int2);
+            startActivity(intent);
         }
     }
 
