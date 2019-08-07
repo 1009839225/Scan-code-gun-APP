@@ -140,7 +140,7 @@ public class SmallVerifyActivity extends Activity {
 
         top_back = findViewById(R.id.top_back);
         top_back.setOnClickListener(v -> {
-            Intent intent = new Intent(SmallVerifyActivity.this, MainActivity.class);
+            Intent intent = new Intent(SmallVerifyActivity.this, BigVerifyActivity.class);
             finish();
             startActivity(intent);
         });
