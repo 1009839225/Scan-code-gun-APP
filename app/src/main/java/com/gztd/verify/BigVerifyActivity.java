@@ -63,7 +63,8 @@ public class BigVerifyActivity extends AppCompatActivity {
     EditText etBtz4;
 
     private Context mContext;
-
+    List<String> list = new ArrayList<>();
+    List<String> list1 = new ArrayList<>();
     private String beforeresult;
     private String str1;
     private String[] name_zhtm = {"代号", "牌号", "图号", "规格型号", "冲压号", "数量", "件数", "带材批号（复合批号）", "是否匹配入库单", "9", "10"};
@@ -154,13 +155,13 @@ public class BigVerifyActivity extends AppCompatActivity {
 //        tb_zhtm.removeAllViews();
 //        tableview_zhtm();
         String str = etRkdh.getText().toString();
-        List<String> list = new ArrayList<>();
+
         StringTokenizer st = new StringTokenizer(str, "\\|");
         while (st.hasMoreTokens()) {
             list.add(st.nextToken());
         }
         //Intent传值存储单据界面传过来的数据
-        Intent intent2=getIntent();
+        Intent intent2 = getIntent();
         etCkbm.setText(intent2.getStringExtra("inventory"));
         etGhdw.setText(intent2.getStringExtra("inventory"));
         etBtz4.setText(intent2.getStringExtra("inventory"));
@@ -170,13 +171,18 @@ public class BigVerifyActivity extends AppCompatActivity {
         etRkdh.setText("");
         str1 = list.get(0);
         etRkdh.setHint(str1);
-
+        //每扫码一次往list1中增加一个单号（唯一标识）
+        list1.add(str1);
         //码上数据
         RelativeLayout relativeLayout1 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
 
         MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
-        txt.setText(list.get(1));
-
+        //判断不重复
+        if (isRepeat()){
+            txt.setText(list.get(1));
+        }else {
+            Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
+        }
 //			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_2);
 //			txt.setText(list.get(2));
 //
@@ -198,12 +204,11 @@ public class BigVerifyActivity extends AppCompatActivity {
 //			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_8);
 //			txt.setText(list.get(8));
 
-//        tb_zhtm.addView(relativeLayout1);
+        tb_zhtm.addView(relativeLayout1);
 //		} else {
 //			Toast.makeText(BigVerifyActivity.this, "��Ч���ݣ�������", Toast.LENGTH_SHORT).show();
 //			et_zhtm.setText("");
 //		}
-
 
 
 //        //开始获取大盒子数据
@@ -351,6 +356,17 @@ public class BigVerifyActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile("\\|");
         Matcher matcher = pattern.matcher(content);
         return matcher.find();
+    }
+
+    //判断是否有重复
+    public boolean isRepeat(){
+        boolean r = false;
+        for(int i=0;i<list1.size();i++){
+            if (list.contains(list1.get(i))) {
+                r = false;
+            }
+        }
+        return r;
     }
 
     //纸盒条码表体标题显示
