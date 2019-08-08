@@ -25,16 +25,11 @@ import android.widget.Toast;
 import com.gztd.test01.MainActivity;
 import com.gztd.test01.R;
 import com.pedaily.yc.ycdialoglib.dialog.loading.ViewLoading;
-import com.pedaily.yc.ycdialoglib.fragment.CustomDialogFragment;
-import com.pedaily.yc.ycdialoglib.utils.DialogUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,24 +38,18 @@ import butterknife.ButterKnife;
 import util.GetTable_ST_ProductReceive;
 import util.MyTableTextView1;
 
-public class BigVerifyActivity extends AppCompatActivity {
+public class DocumentActivity extends AppCompatActivity {
 
     @BindView(R.id.top_back)
     ImageButton top_back;
+    @BindView(R.id.et_zhtm)
+    EditText et_zhtm;
     @BindView(R.id.tb_zhtm)
     LinearLayout tb_zhtm;
     @BindView(R.id.bt_hd)
     Button bt_hd;
     @BindView(R.id.bt_jx)
     Button bt_jx;
-    @BindView(R.id.et_rkdh)
-    EditText etRkdh;
-    @BindView(R.id.et_ckbm)
-    EditText etCkbm;
-    @BindView(R.id.et_ghdw)
-    EditText etGhdw;
-    @BindView(R.id.et_btz4)
-    EditText etBtz4;
 
     private Context mContext;
 
@@ -85,13 +74,12 @@ public class BigVerifyActivity extends AppCompatActivity {
             }
         }
     };
-    private String inventoryname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_verify_big);
+        setContentView(R.layout.activity_verify_doc);
         ButterKnife.bind(this);
         init();
     }
@@ -99,9 +87,9 @@ public class BigVerifyActivity extends AppCompatActivity {
     protected void load() {
         QueryAddressTask queryAddressTask = new QueryAddressTask();
         //开始loading
-        ViewLoading.show(mContext, "加载中");
+        ViewLoading.show(mContext,"加载中");
         // 启动后台任务
-        queryAddressTask.execute(etRkdh.getText().toString());
+        queryAddressTask.execute(et_zhtm.getText().toString());
     }
 
     class QueryAddressTask extends AsyncTask<String, Integer, String> {
@@ -123,12 +111,12 @@ public class BigVerifyActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            if (!isLegal(et_str_zhtm)) {
-                //结束loading
-                ViewLoading.dismiss(mContext);
-                Toast.makeText(BigVerifyActivity.this, "无效数据，请重试", Toast.LENGTH_SHORT).show();
-                etRkdh.setText("");
-            } else {
+//            if (!isLegal(et_str_zhtm)) {
+//                //结束loading
+//                ViewLoading.dismiss(mContext);
+//                Toast.makeText(DocumentActivity.this, "无效数据，请重试", Toast.LENGTH_SHORT).show();
+//                et_zhtm.setText("");
+//            } else {
                 ViewLoading.dismiss(mContext);
                 try {
                     JSONObject info1 = new JSONObject(result);
@@ -137,14 +125,14 @@ public class BigVerifyActivity extends AppCompatActivity {
                     if (jsonArray.length() != 0) {
                         indata(s);
                     } else {
-                        Toast.makeText(BigVerifyActivity.this, "没有数据", Toast.LENGTH_SHORT).show();
-                        etRkdh.setText("");
+                        Toast.makeText(DocumentActivity.this, "没有数据", Toast.LENGTH_SHORT).show();
+                        et_zhtm.setText("");
                     }
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-            }
+//            }
 
         }
     }
@@ -153,129 +141,130 @@ public class BigVerifyActivity extends AppCompatActivity {
     public void indata(String s) throws JSONException {
 //        tb_zhtm.removeAllViews();
 //        tableview_zhtm();
-        String str = etRkdh.getText().toString();
-        List<String> list = new ArrayList<>();
-        StringTokenizer st = new StringTokenizer(str, "\\|");
-        while (st.hasMoreTokens()) {
-            list.add(st.nextToken());
-        }
-        //Intent传值存储单据界面传过来的数据
-        Intent intent2=getIntent();
-        etCkbm.setText(intent2.getStringExtra("inventory"));
-        etGhdw.setText(intent2.getStringExtra("inventory"));
-        etBtz4.setText(intent2.getStringExtra("inventory"));
-
-        inventoryname = intent2.getStringExtra("inventoryname");
-//	    if (list.size() == 9) {
-        etRkdh.setText("");
-        str1 = list.get(0);
-        etRkdh.setHint(str1);
-
-        //码上数据
-        RelativeLayout relativeLayout1 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
-
-        MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
-        txt.setText(list.get(1));
-
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_2);
-//			txt.setText(list.get(2));
+//        String str = et_zhtm.getText().toString();
+//        List<String> list = new ArrayList<>();
+//        StringTokenizer st = new StringTokenizer(str, "\\|");
+//        while (st.hasMoreTokens()) {
+//            list.add(st.nextToken());
+//        }
 //
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_3);
-//			txt.setText(list.get(3));
+////	    if (list.size() == 9) {
+//            et_zhtm.setText("");
+//        str1 = list.get(0);
+//        et_zhtm.setHint(str1);
+//        //第一行数据：码上数据
+//        RelativeLayout relativeLayout1 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
 //
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_4);
-//			txt.setText(list.get(4));
+//        MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
+//        txt.setText(list.get(1));
 //
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_5);
-//			txt.setText(list.get(5));
+////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_2);
+////			txt.setText(list.get(2));
+////
+////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_3);
+////			txt.setText(list.get(3));
+////
+////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_4);
+////			txt.setText(list.get(4));
+////
+////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_5);
+////			txt.setText(list.get(5));
+////
+////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_6);
+////			txt.setText(list.get(6));
+////
+////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_7);
+////			txt.setText(list.get(7));
+////
+////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_8);
+////			txt.setText(list.get(8));
 //
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_6);
-//			txt.setText(list.get(6));
-//			
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_7);
-//			txt.setText(list.get(7));
-//
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_8);
-//			txt.setText(list.get(8));
-
 //        tb_zhtm.addView(relativeLayout1);
-//		} else {
-//			Toast.makeText(BigVerifyActivity.this, "��Ч���ݣ�������", Toast.LENGTH_SHORT).show();
-//			et_zhtm.setText("");
-//		}
+////		} else {
+////			Toast.makeText(BigVerifyActivity.this, "��Ч���ݣ�������", Toast.LENGTH_SHORT).show();
+////			et_zhtm.setText("");
+////		}
 
+        //第二行数据：数据库数据
+        JSONArray jsonArray = new JSONArray(s);
+        final JSONObject info = jsonArray.getJSONObject(0);
+//	    if (str1.length()>0) {
+        et_zhtm.setText(info.getString("InventoryCode"));
+        RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
 
+        relativeLayout2.setOnClickListener(v -> {
+            Intent intent = new Intent(DocumentActivity.this,BigVerifyActivity.class);
+            finish();
+            try {
+                intent.putExtra("inventory",info.getString("inventory"));//键值对 后面的值为传的内容
+                intent.putExtra("inventoryname",info.getString("inventoryname"));
+                startActivity(intent);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-//        //开始获取大盒子数据
-//        JSONArray jsonArray = new JSONArray(s);
-//        final JSONObject info = jsonArray.getJSONObject(0);
-////	    if (str1.length()>0) {
-//
-//        RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
-//
-//        MyTableTextView1 txt1 = relativeLayout2.findViewById(R.id.list_1_1);
-//        txt1.setText(info.getString("InventoryCode"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_2);
-//        txt1.setText(info.getString("InventoryName"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_3);
-//        txt1.setText(info.getString("Specifications"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_4);
-//        txt1.setText(info.getString("Quantity"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_5);
-//        txt1.setText(info.getString("Storehouse"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_6);
-//        txt1.setText(info.getString("InventoryCode"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_7);
-//        txt1.setText(info.getString("InventoryCode"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_8);
-//        txt1.setText(info.getString("InventoryCode"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_9);
-//        txt1.setText(info.getString("InventoryCode"));
-//
-//        tb_zhtm.addView(relativeLayout2);
+        });
+        MyTableTextView1 txt1 = relativeLayout2.findViewById(R.id.list_1_1);
+        txt1.setText(info.getString("InventoryCode"));
+
+        txt1 = relativeLayout2.findViewById(R.id.list_1_2);
+        txt1.setText(info.getString("InventoryName"));
+
+        txt1 = relativeLayout2.findViewById(R.id.list_1_3);
+        txt1.setText(info.getString("Specifications"));
+
+        txt1 = relativeLayout2.findViewById(R.id.list_1_4);
+        txt1.setText(info.getString("Quantity"));
+
+        txt1 = relativeLayout2.findViewById(R.id.list_1_5);
+        txt1.setText(info.getString("Storehouse"));
+
+        txt1 = relativeLayout2.findViewById(R.id.list_1_6);
+        txt1.setText(info.getString("InventoryCode"));
+
+        txt1 = relativeLayout2.findViewById(R.id.list_1_7);
+        txt1.setText(info.getString("InventoryCode"));
+
+        txt1 = relativeLayout2.findViewById(R.id.list_1_8);
+        txt1.setText(info.getString("InventoryCode"));
+
+        txt1 = relativeLayout2.findViewById(R.id.list_1_9);
+        txt1.setText(info.getString("InventoryCode"));
+
+        tb_zhtm.addView(relativeLayout2);
 //	    }
 
-        DialogUtils.requestMsgPermission(this);//自定义样式调用
-
-        //这里判断是否匹配
-        if (list.get(0).equals(inventoryname)) {
-            CustomDialogFragment
-                    .create(getSupportFragmentManager())
-                    .setTitle("系统提示：")
-                    .setContent("当前数据匹配，请继续！")
-                    .setDimAmount(0.2f)
-                    .setTag("dialog")
-                    .setCancelOutside(true)
-                    .setOkListener(v -> {
-                        CustomDialogFragment.dismissDialogFragment();
-                        Intent intent = new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
-                        startActivity(intent);
-                    })
-                    .show();
-        } else {
-            CustomDialogFragment
-                    .create(getSupportFragmentManager())
-                    .setTitle("系统提示：")
-                    .setContent("当前数据不匹配，请检查！")
-                    .setDimAmount(0.2f)
-                    .setTag("dialog")
-                    .setCancelOutside(true)
-                    .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
-                    .show();
-        }
+//        DialogUtils.requestMsgPermission(this);//自定义样式调用
+//        if (list.get(0).equals(info.getString("InventoryCode"))) {
+//            CustomDialogFragment
+//                    .create(getSupportFragmentManager())
+//                    .setTitle("系统提示：")
+//                    .setContent("当前数据匹配，请继续！")
+//                    .setDimAmount(0.2f)
+//                    .setTag("dialog")
+//                    .setCancelOutside(true)
+//                    .setOkListener(v -> {
+//                        CustomDialogFragment.dismissDialogFragment();
+//                        Intent intent = new Intent(DocumentActivity.this, SmallVerifyActivity.class);
+//                        startActivity(intent);
+//                    })
+//                    .show();
+//        } else {
+//            CustomDialogFragment
+//                    .create(getSupportFragmentManager())
+//                    .setTitle("系统提示：")
+//                    .setContent("当前数据不匹配，请检查！")
+//                    .setDimAmount(0.2f)
+//                    .setTag("dialog")
+//                    .setCancelOutside(true)
+//                    .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
+//                    .show();
+//        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
-        mContext = BigVerifyActivity.this;
+        mContext = DocumentActivity.this;
         bt_hd.setOnClickListener(v -> {
 //				//TODO 核对并弹出对话框
 ////				check();
@@ -301,7 +290,7 @@ public class BigVerifyActivity extends AppCompatActivity {
             return false;
         });
         bt_jx.setOnClickListener(v -> {
-            Intent intent = new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
+            Intent intent = new Intent(DocumentActivity.this, SmallVerifyActivity.class);
             finish();
             startActivity(intent);
         });
@@ -316,13 +305,13 @@ public class BigVerifyActivity extends AppCompatActivity {
         });
 
         top_back.setOnClickListener(v -> {
-            Intent intent = new Intent(BigVerifyActivity.this, MainActivity.class);
+            Intent intent = new Intent(DocumentActivity.this, MainActivity.class);
             finish();
             startActivity(intent);
         });
 
         // 纸盒条码的扫描监听
-        etRkdh.addTextChangedListener(new TextWatcher() {
+        et_zhtm.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -395,10 +384,9 @@ public class BigVerifyActivity extends AppCompatActivity {
         title.setFocusableInTouchMode(false);
         tb_zhtm.addView(rl_zhtm);
     }
-
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(BigVerifyActivity.this, MainActivity.class);
+        Intent intent = new Intent(DocumentActivity.this,MainActivity.class);
         finish();
         startActivity(intent);
     }
