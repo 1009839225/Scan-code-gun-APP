@@ -62,6 +62,7 @@
             android:text="密    码：" />
 
         <EditText
+
             android:id="@+id/a_ed_pw"
             style="@style/EditTextStyle"
             android:layout_width="wrap_content"
@@ -94,7 +95,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.57"
             android:ems="10"
-            android:hint="请输入账套"></EditText>
+            android:hint="请输入账套"
+            android:singleLine="true" />
+
     </LinearLayout>
 
     <LinearLayout

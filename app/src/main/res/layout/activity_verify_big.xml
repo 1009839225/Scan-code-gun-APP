@@ -138,7 +138,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="275dp"
+            android:layout_height="wrap_content"
             android:fillViewport="true"
             android:scrollbars="none">
 
@@ -196,5 +196,30 @@
             android:textColor="#ffffff"
             android:textSize="20sp" />
     </LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="扫码次数合计："/>
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_toRightOf="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"/>
+    </LinearLayout>
+
+</RelativeLayout>
+
 
 </LinearLayout>

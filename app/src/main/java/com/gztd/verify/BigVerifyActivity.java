@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gztd.test01.MainActivity;
@@ -61,6 +62,8 @@ public class BigVerifyActivity extends AppCompatActivity {
     EditText etGhdw;
     @BindView(R.id.et_btz4)
     EditText etBtz4;
+    @BindView(R.id.tv_count)
+    TextView tvCount;
 
     private Context mContext;
     List<String> list = new ArrayList<>();
@@ -271,23 +274,30 @@ public class BigVerifyActivity extends AppCompatActivity {
     }
 
     private void vision(RelativeLayout relativeLayout1) {
+        int num = 0;
         //relativeLayout1如果为空，就是第一次扫码，不需要判断
-        if (relativeLayout1==null){
+        if (relativeLayout1 == null) {
             MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
             txt.setText(list.get(0));
             txt.setFocusableInTouchMode(false);
             list1.add(list.get(0));
             list.clear();
-        }else {
+            num++;
+            String count = String.valueOf(num);
+            tvCount.setText(count);
+        } else {
             //判断不重复
-            if (!isRepeat()){
+            if (!isRepeat()) {
                 MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
                 txt.setText(list.get(0));
                 txt.setFocusableInTouchMode(false);
                 list1.add(list.get(0));
                 list.clear();
                 checkMatch();
-            }else {
+                num++;
+                String count = String.valueOf(num);
+                tvCount.setText(count);
+            } else {
                 Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
                 relativeLayout1.removeAllViews();
                 list.clear();
@@ -383,15 +393,23 @@ public class BigVerifyActivity extends AppCompatActivity {
     }
 
     //判断是否有重复
-    public boolean isRepeat(){
+    public boolean isRepeat() {
         boolean r = false;
-        for(int i=0;i<list1.size();i++){
+        for (int i = 0; i < list1.size(); i++) {
             if (list.get(0).contains(list1.get(i))) {
                 r = true;
             }
         }
         return r;
     }
+
+//    // 动态文本工具方法
+//    public void DynamicSetTextTool(int stringId, Object changeText, int viewId) {
+//        String RefreshTime = getResources().getString(stringId);
+//        String FinalRefreshTime = String.format(RefreshTime, changeText);
+//        TextView RefreshTextObject = findViewById(viewId);
+//        RefreshTextObject.setText(FinalRefreshTime);
+//    }
 
     //纸盒条码表体标题显示
     private void tableview_zhtm() {
