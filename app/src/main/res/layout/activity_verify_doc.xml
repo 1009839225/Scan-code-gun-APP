@@ -43,7 +43,7 @@
             android:text="单号：" />
 
         <EditText
-            android:id="@+id/et_zhtm"
+            android:id="@+id/et_djtm"
             style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

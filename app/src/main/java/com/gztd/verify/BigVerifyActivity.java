@@ -53,7 +53,7 @@ public class BigVerifyActivity extends AppCompatActivity {
     Button bt_hd;
     @BindView(R.id.bt_jx)
     Button bt_jx;
-    @BindView(R.id.et_rkdh)
+    @BindView(R.id.et_zhtm)
     EditText etRkdh;
     @BindView(R.id.et_ckbm)
     EditText etCkbm;

@@ -30,6 +30,7 @@
         <activity android:name="com.gztd.deliver.BigVerifyActivity" />
         <activity android:name="com.gztd.deliver.SmallVerifyActivity" />
         <activity android:name="com.gztd.inventory.InventoryActivity" />
+        <activity android:name="com.gztd.verify.DocumentActivity" />
     </application>
 
 </manifest>

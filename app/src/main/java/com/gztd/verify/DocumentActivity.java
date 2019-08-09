@@ -42,14 +42,15 @@ public class DocumentActivity extends AppCompatActivity {
 
     @BindView(R.id.top_back)
     ImageButton top_back;
-    @BindView(R.id.et_zhtm)
-    EditText et_zhtm;
+
     @BindView(R.id.tb_zhtm)
     LinearLayout tb_zhtm;
     @BindView(R.id.bt_hd)
     Button bt_hd;
     @BindView(R.id.bt_jx)
     Button bt_jx;
+    @BindView(R.id.et_djtm)
+    EditText etDjtm;
 
     private Context mContext;
 
@@ -87,9 +88,9 @@ public class DocumentActivity extends AppCompatActivity {
     protected void load() {
         QueryAddressTask queryAddressTask = new QueryAddressTask();
         //开始loading
-        ViewLoading.show(mContext,"加载中");
+        ViewLoading.show(mContext, "加载中");
         // 启动后台任务
-        queryAddressTask.execute(et_zhtm.getText().toString());
+        queryAddressTask.execute(etDjtm.getText().toString());
     }
 
     class QueryAddressTask extends AsyncTask<String, Integer, String> {
@@ -117,21 +118,21 @@ public class DocumentActivity extends AppCompatActivity {
 //                Toast.makeText(DocumentActivity.this, "无效数据，请重试", Toast.LENGTH_SHORT).show();
 //                et_zhtm.setText("");
 //            } else {
-                ViewLoading.dismiss(mContext);
-                try {
-                    JSONObject info1 = new JSONObject(result);
-                    String s = info1.getString("Details");// 表体
-                    JSONArray jsonArray = new JSONArray(s);
-                    if (jsonArray.length() != 0) {
-                        indata(s);
-                    } else {
-                        Toast.makeText(DocumentActivity.this, "没有数据", Toast.LENGTH_SHORT).show();
-                        et_zhtm.setText("");
-                    }
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+            ViewLoading.dismiss(mContext);
+            try {
+                JSONObject info1 = new JSONObject(result);
+                String s = info1.getString("Details");// 表体
+                JSONArray jsonArray = new JSONArray(s);
+                if (jsonArray.length() != 0) {
+                    indata(s);
+                } else {
+                    Toast.makeText(DocumentActivity.this, "没有数据", Toast.LENGTH_SHORT).show();
+                    etDjtm.setText("");
                 }
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 //            }
 
         }
@@ -189,15 +190,15 @@ public class DocumentActivity extends AppCompatActivity {
         JSONArray jsonArray = new JSONArray(s);
         final JSONObject info = jsonArray.getJSONObject(0);
 //	    if (str1.length()>0) {
-        et_zhtm.setText(info.getString("InventoryCode"));
+        etDjtm.setText(info.getString("InventoryCode"));
         RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
 
         relativeLayout2.setOnClickListener(v -> {
-            Intent intent = new Intent(DocumentActivity.this,BigVerifyActivity.class);
+            Intent intent = new Intent(DocumentActivity.this, BigVerifyActivity.class);
             finish();
             try {
-                intent.putExtra("inventory",info.getString("inventory"));//键值对 后面的值为传的内容
-                intent.putExtra("inventoryname",info.getString("inventoryname"));
+                intent.putExtra("inventory", info.getString("inventory"));//键值对 后面的值为传的内容
+                intent.putExtra("inventoryname", info.getString("inventoryname"));
                 startActivity(intent);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -311,7 +312,7 @@ public class DocumentActivity extends AppCompatActivity {
         });
 
         // 纸盒条码的扫描监听
-        et_zhtm.addTextChangedListener(new TextWatcher() {
+        etDjtm.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -384,9 +385,10 @@ public class DocumentActivity extends AppCompatActivity {
         title.setFocusableInTouchMode(false);
         tb_zhtm.addView(rl_zhtm);
     }
+
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(DocumentActivity.this,MainActivity.class);
+        Intent intent = new Intent(DocumentActivity.this, MainActivity.class);
         finish();
         startActivity(intent);
     }

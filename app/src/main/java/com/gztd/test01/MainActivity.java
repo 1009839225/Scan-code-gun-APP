@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gztd.inventory.InventoryActivity;
-import com.gztd.verify.BigVerifyActivity;
+import com.gztd.verify.DocumentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -370,7 +370,7 @@ public class MainActivity extends Activity {
         }
 
         private void smhd() {
-            Intent intent2 = new Intent(MainActivity.this, BigVerifyActivity.class);
+            Intent intent2 = new Intent(MainActivity.this, DocumentActivity.class);
             finish();
             startActivityForResult(intent2, 0);
         }
