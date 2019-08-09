@@ -30,6 +30,7 @@
     <!-- 扫描纸盒条码 -->
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         style="@style/InputBoxStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,6 +69,7 @@
 
         <EditText
             android:id="@+id/et_ckbm"
+            android:focusable="false"
             style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,6 +95,7 @@
         <EditText
             android:id="@+id/et_ghdw"
             style="@style/EditTextStyle"
+            android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true">
@@ -117,6 +120,7 @@
         <EditText
             android:id="@+id/et_btz4"
             style="@style/EditTextStyle"
+            android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true">

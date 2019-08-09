@@ -86,7 +86,7 @@ public class BigVerifyActivity extends AppCompatActivity {
             }
         }
     };
-    private String inventoryname;
+    private String inventoryCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +152,7 @@ public class BigVerifyActivity extends AppCompatActivity {
 
     //返回扫码数据并核对
     public void indata(String s) throws JSONException {
-//        tb_zhtm.removeAllViews();
+
 //        tableview_zhtm();
         String str = etRkdh.getText().toString();
 
@@ -160,35 +160,16 @@ public class BigVerifyActivity extends AppCompatActivity {
         while (st.hasMoreTokens()) {
             list.add(st.nextToken());
         }
-        //Intent传值存储单据界面传过来的数据
-        Intent intent2 = getIntent();
-        etCkbm.setText(intent2.getStringExtra("inventory"));
-        etGhdw.setText(intent2.getStringExtra("inventory"));
-        etBtz4.setText(intent2.getStringExtra("inventory"));
 
-        inventoryname = intent2.getStringExtra("inventoryname");
 //	    if (list.size() == 9) {
         etRkdh.setText("");
         str1 = list.get(0);
-//        etRkdh.setHint(str1);
-        //从第二次扫码开始每扫码一次往list1中增加一个单号（唯一标识）
-        list1.add(str1);
+        etRkdh.setHint(str1);
+
         //码上数据
         RelativeLayout relativeLayout1 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
-        //relativeLayout1如果为空，就是第一次扫码，不需要判断
-        if (relativeLayout1==null){
-            MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
-            txt.setText(list.get(0));
-        }else {
-            //判断不重复
-            if (!isRepeat()){
-                MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
-                txt.setText(list.get(0));
-            }else {
-                Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
-            }
-        }
 
+        vision(relativeLayout1);
 
 
 //			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_2);
@@ -256,10 +237,14 @@ public class BigVerifyActivity extends AppCompatActivity {
 //        tb_zhtm.addView(relativeLayout2);
 //	    }
 
+
+    }
+
+    private void checkMatch() {
         DialogUtils.requestMsgPermission(this);//自定义样式调用
 
         //这里判断是否匹配
-        if (list.get(0).equals(inventoryname)) {
+        if (str1.equals(inventoryCode)) {
             CustomDialogFragment
                     .create(getSupportFragmentManager())
                     .setTitle("系统提示：")
@@ -269,8 +254,7 @@ public class BigVerifyActivity extends AppCompatActivity {
                     .setCancelOutside(true)
                     .setOkListener(v -> {
                         CustomDialogFragment.dismissDialogFragment();
-                        Intent intent = new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
-                        startActivity(intent);
+
                     })
                     .show();
         } else {
@@ -283,6 +267,31 @@ public class BigVerifyActivity extends AppCompatActivity {
                     .setCancelOutside(true)
                     .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
                     .show();
+        }
+    }
+
+    private void vision(RelativeLayout relativeLayout1) {
+        //relativeLayout1如果为空，就是第一次扫码，不需要判断
+        if (relativeLayout1==null){
+            MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
+            txt.setText(list.get(0));
+            txt.setFocusableInTouchMode(false);
+            list1.add(list.get(0));
+            list.clear();
+        }else {
+            //判断不重复
+            if (!isRepeat()){
+                MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
+                txt.setText(list.get(0));
+                txt.setFocusableInTouchMode(false);
+                list1.add(list.get(0));
+                list.clear();
+                checkMatch();
+            }else {
+                Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
+                relativeLayout1.removeAllViews();
+                list.clear();
+            }
         }
     }
 
@@ -357,6 +366,13 @@ public class BigVerifyActivity extends AppCompatActivity {
         });
 
         tableview_zhtm();
+        //Intent传值存储单据界面传过来的数据
+        Intent intent2 = getIntent();
+        etCkbm.setText(intent2.getStringExtra("InventoryCode"));
+        etGhdw.setText(intent2.getStringExtra("inventory"));
+        etBtz4.setText(intent2.getStringExtra("inventory"));
+
+        inventoryCode = intent2.getStringExtra("InventoryCode");
     }
 
     //正则表达式判断字符输入合法性
@@ -370,7 +386,7 @@ public class BigVerifyActivity extends AppCompatActivity {
     public boolean isRepeat(){
         boolean r = false;
         for(int i=0;i<list1.size();i++){
-            if (list.contains(list1.get(i))) {
+            if (list.get(0).contains(list1.get(i))) {
                 r = true;
             }
         }

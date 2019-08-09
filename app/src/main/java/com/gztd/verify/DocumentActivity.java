@@ -53,7 +53,7 @@ public class DocumentActivity extends AppCompatActivity {
     EditText etDjtm;
 
     private Context mContext;
-
+    private final static int REQUESTCODE = 2; // 返回的结果码
     private String beforeresult;
     private String str1;
     private String[] name_zhtm = {"代号", "牌号", "图号", "规格型号", "冲压号", "数量", "件数", "带材批号（复合批号）", "是否匹配入库单", "9", "10"};
@@ -150,7 +150,7 @@ public class DocumentActivity extends AppCompatActivity {
 //        }
 //
 ////	    if (list.size() == 9) {
-//            et_zhtm.setText("");
+
 //        str1 = list.get(0);
 //        et_zhtm.setHint(str1);
 //        //第一行数据：码上数据
@@ -190,47 +190,60 @@ public class DocumentActivity extends AppCompatActivity {
         JSONArray jsonArray = new JSONArray(s);
         final JSONObject info = jsonArray.getJSONObject(0);
 //	    if (str1.length()>0) {
-        etDjtm.setText(info.getString("InventoryCode"));
+//        etDjtm.setText(info.getString("InventoryCode"));
+        etDjtm.setText("");
         RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
 
-        relativeLayout2.setOnClickListener(v -> {
-            Intent intent = new Intent(DocumentActivity.this, BigVerifyActivity.class);
-            finish();
+        MyTableTextView1 txt1 = relativeLayout2.findViewById(R.id.list_1_1);
+        txt1.setText(info.getString("InventoryCode"));
+        txt1.setOnClickListener(v -> {
+            Intent intent2 = new Intent(DocumentActivity.this, BigVerifyActivity.class);
+
             try {
-                intent.putExtra("inventory", info.getString("inventory"));//键值对 后面的值为传的内容
-                intent.putExtra("inventoryname", info.getString("inventoryname"));
-                startActivity(intent);
+
+                intent2.putExtra("InventoryCode", info.getString("InventoryCode"));//键值对 后面的值为传的内容
+                intent2.putExtra("Inventoryname", info.getString("Inventoryname"));
+
+
+//                finish();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+            startActivity(intent2);
         });
-        MyTableTextView1 txt1 = relativeLayout2.findViewById(R.id.list_1_1);
-        txt1.setText(info.getString("InventoryCode"));
+        txt1.setFocusableInTouchMode(false);
 
         txt1 = relativeLayout2.findViewById(R.id.list_1_2);
         txt1.setText(info.getString("InventoryName"));
+        txt1.setFocusableInTouchMode(false);
 
         txt1 = relativeLayout2.findViewById(R.id.list_1_3);
         txt1.setText(info.getString("Specifications"));
+        txt1.setFocusableInTouchMode(false);
 
         txt1 = relativeLayout2.findViewById(R.id.list_1_4);
         txt1.setText(info.getString("Quantity"));
+        txt1.setFocusableInTouchMode(false);
 
         txt1 = relativeLayout2.findViewById(R.id.list_1_5);
         txt1.setText(info.getString("Storehouse"));
+        txt1.setFocusableInTouchMode(false);
 
         txt1 = relativeLayout2.findViewById(R.id.list_1_6);
         txt1.setText(info.getString("InventoryCode"));
+        txt1.setFocusableInTouchMode(false);
 
         txt1 = relativeLayout2.findViewById(R.id.list_1_7);
         txt1.setText(info.getString("InventoryCode"));
+        txt1.setFocusableInTouchMode(false);
 
         txt1 = relativeLayout2.findViewById(R.id.list_1_8);
         txt1.setText(info.getString("InventoryCode"));
+        txt1.setFocusableInTouchMode(false);
 
         txt1 = relativeLayout2.findViewById(R.id.list_1_9);
         txt1.setText(info.getString("InventoryCode"));
+        txt1.setFocusableInTouchMode(false);
 
         tb_zhtm.addView(relativeLayout2);
 //	    }
