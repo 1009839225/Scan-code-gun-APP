@@ -170,19 +170,27 @@ public class BigVerifyActivity extends AppCompatActivity {
 //	    if (list.size() == 9) {
         etRkdh.setText("");
         str1 = list.get(0);
-        etRkdh.setHint(str1);
-        //每扫码一次往list1中增加一个单号（唯一标识）
+//        etRkdh.setHint(str1);
+        //从第二次扫码开始每扫码一次往list1中增加一个单号（唯一标识）
         list1.add(str1);
         //码上数据
         RelativeLayout relativeLayout1 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
-
-        MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
-        //判断不重复
-        if (isRepeat()){
-            txt.setText(list.get(1));
+        //relativeLayout1如果为空，就是第一次扫码，不需要判断
+        if (relativeLayout1==null){
+            MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
+            txt.setText(list.get(0));
         }else {
-            Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
+            //判断不重复
+            if (!isRepeat()){
+                MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
+                txt.setText(list.get(0));
+            }else {
+                Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
+            }
         }
+
+
+
 //			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_2);
 //			txt.setText(list.get(2));
 //
@@ -363,7 +371,7 @@ public class BigVerifyActivity extends AppCompatActivity {
         boolean r = false;
         for(int i=0;i<list1.size();i++){
             if (list.contains(list1.get(i))) {
-                r = false;
+                r = true;
             }
         }
         return r;
