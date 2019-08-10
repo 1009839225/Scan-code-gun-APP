@@ -166,12 +166,15 @@ public class DocumentActivity extends AppCompatActivity {
             list1.add(list.get(0));
             list.clear();
         }else {
+
             list.add(json.getString("SourceVoucherCode"));
             if (isRepeat()){
                 Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
                 etDjtm.setText("");
                 list.clear();
             } else {
+                tb_zhtm.removeAllViews();
+                tableview_zhtm();
                 etDjtm.setText("");
                 etDjtm.setHint(json.getString("SourceVoucherCode"));
                 etCkbm.setText(json.getString("SourceVoucherCode"));

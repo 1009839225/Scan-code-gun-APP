@@ -69,6 +69,7 @@ public class BigVerifyActivity extends AppCompatActivity {
     List<String> list1 = new ArrayList<>();
     private String beforeresult;
     private String str1;
+    private String inventoryCode;
     private String[] name_zhtm = {"代号", "牌号", "图号", "规格型号", "冲压号", "数量", "件数", "带材批号（复合批号）", "是否匹配入库单", "9", "10"};
 
     private Handler handler_zhtm = new Handler();
@@ -88,7 +89,7 @@ public class BigVerifyActivity extends AppCompatActivity {
             }
         }
     };
-    private String inventoryCode;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -254,10 +255,7 @@ public class BigVerifyActivity extends AppCompatActivity {
                     .setDimAmount(0.2f)
                     .setTag("dialog")
                     .setCancelOutside(true)
-                    .setOkListener(v -> {
-                        CustomDialogFragment.dismissDialogFragment();
-
-                    })
+                    .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
                     .show();
         } else {
             CustomDialogFragment
@@ -289,6 +287,14 @@ public class BigVerifyActivity extends AppCompatActivity {
                 txt.setText(list.get(0));
                 txt.setFocusableInTouchMode(false);
                 list1.add(list.get(0));
+                txt.setOnClickListener(v -> {
+                    Intent intent3= new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
+
+                    intent3.putExtra("InventoryCode", list1.get(0));//键值对 后面的值为传的内容
+                    intent3.putExtra("Inventoryname", list1.get(0));
+
+                    startActivity(intent3);
+                });
                 list.clear();
                 checkMatch();
                 tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));

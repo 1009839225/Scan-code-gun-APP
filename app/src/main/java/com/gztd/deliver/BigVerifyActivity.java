@@ -123,6 +123,14 @@ public class BigVerifyActivity extends Activity {
 
         MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
         txt.setText(list.get(1));
+        txt.setOnClickListener(v -> {
+            Intent intent2 = new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
+
+                intent2.putExtra("InventoryCode",list.get(1));//键值对 后面的值为传的内容
+                intent2.putExtra("Inventoryname", list.get(1));
+
+            startActivity(intent2);
+        });
 
         txt = relativeLayout1.findViewById(R.id.list_1_2);
         txt.setText(list.get(2));
