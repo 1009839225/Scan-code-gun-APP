@@ -41,7 +41,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="表头值1：" />
+            android:text="纸盒标签：" />
 
         <EditText
             android:id="@+id/et_zhtm"
@@ -65,7 +65,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="表头值2：" />
+            android:text="行号：" />
 
         <EditText
             android:id="@+id/et_ckbm"
@@ -80,6 +80,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         style="@style/InputBoxStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -105,6 +106,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         style="@style/InputBoxStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -30,6 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,13 +53,17 @@ public class DocumentActivity extends AppCompatActivity {
     Button bt_jx;
     @BindView(R.id.et_djtm)
     EditText etDjtm;
+    @BindView(R.id.et_ckbm)
+    EditText etCkbm;
+    @BindView(R.id.et_gfbm)
+    EditText etGfbm;
 
     private Context mContext;
-    private final static int REQUESTCODE = 2; // 返回的结果码
     private String beforeresult;
     private String str1;
-    private String[] name_zhtm = {"代号", "牌号", "图号", "规格型号", "冲压号", "数量", "件数", "带材批号（复合批号）", "是否匹配入库单", "9", "10"};
-
+    private String[] name_zhtm = {"代号", "牌号", "图号", "生产批号", "数量", "件数", "带材批号", "材料编号"};
+    List<String> list = new ArrayList<>();
+    List<String> list1 = new ArrayList<>();
     private Handler handler_zhtm = new Handler();
     private String et_str_zhtm;
 
@@ -121,10 +127,11 @@ public class DocumentActivity extends AppCompatActivity {
             ViewLoading.dismiss(mContext);
             try {
                 JSONObject info1 = new JSONObject(result);
-                String s = info1.getString("Details");// 表体
-                JSONArray jsonArray = new JSONArray(s);
+                String main = info1.getString("Main");// 表体
+                String details = info1.getString("Details");// 表体
+                JSONArray jsonArray = new JSONArray(main);
                 if (jsonArray.length() != 0) {
-                    indata(s);
+                    indata(main,details);
                 } else {
                     Toast.makeText(DocumentActivity.this, "没有数据", Toast.LENGTH_SHORT).show();
                     etDjtm.setText("");
@@ -138,142 +145,97 @@ public class DocumentActivity extends AppCompatActivity {
         }
     }
 
-    //返回扫码数据并核对
-    public void indata(String s) throws JSONException {
-//        tb_zhtm.removeAllViews();
-//        tableview_zhtm();
-//        String str = et_zhtm.getText().toString();
-//        List<String> list = new ArrayList<>();
-//        StringTokenizer st = new StringTokenizer(str, "\\|");
-//        while (st.hasMoreTokens()) {
-//            list.add(st.nextToken());
-//        }
-//
-////	    if (list.size() == 9) {
-
-//        str1 = list.get(0);
-//        et_zhtm.setHint(str1);
-//        //第一行数据：码上数据
-//        RelativeLayout relativeLayout1 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
-//
-//        MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
-//        txt.setText(list.get(1));
-//
-////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_2);
-////			txt.setText(list.get(2));
-////
-////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_3);
-////			txt.setText(list.get(3));
-////
-////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_4);
-////			txt.setText(list.get(4));
-////
-////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_5);
-////			txt.setText(list.get(5));
-////
-////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_6);
-////			txt.setText(list.get(6));
-////
-////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_7);
-////			txt.setText(list.get(7));
-////
-////			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_8);
-////			txt.setText(list.get(8));
-//
-//        tb_zhtm.addView(relativeLayout1);
-////		} else {
-////			Toast.makeText(BigVerifyActivity.this, "��Ч���ݣ�������", Toast.LENGTH_SHORT).show();
-////			et_zhtm.setText("");
-////		}
-
-        //第二行数据：数据库数据
-        JSONArray jsonArray = new JSONArray(s);
-        final JSONObject info = jsonArray.getJSONObject(0);
-//	    if (str1.length()>0) {
-//        etDjtm.setText(info.getString("InventoryCode"));
-        etDjtm.setText("");
-        RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
-
-        MyTableTextView1 txt1 = relativeLayout2.findViewById(R.id.list_1_1);
-        txt1.setText(info.getString("InventoryCode"));
-        txt1.setOnClickListener(v -> {
-            Intent intent2 = new Intent(DocumentActivity.this, BigVerifyActivity.class);
-
-            try {
-
-                intent2.putExtra("InventoryCode", info.getString("InventoryCode"));//键值对 后面的值为传的内容
-                intent2.putExtra("Inventoryname", info.getString("Inventoryname"));
-
-
-//                finish();
-            } catch (JSONException e) {
-                e.printStackTrace();
+    //返回扫码数据
+    public void indata(String main,String details) throws JSONException {
+        //表头数据
+        JSONArray jsonArray1 = new JSONArray(main);
+        JSONObject json = jsonArray1.getJSONObject(0);
+        //etCkbm如果为空，就是第一次扫码，不需要判断
+        if (etCkbm.getText().toString().equals("")) {
+            etDjtm.setText("");
+            etDjtm.setHint(json.getString("SourceVoucherCode"));
+            etCkbm.setText(json.getString("SourceVoucherCode"));
+            etGfbm.setText(json.getString("SourceVoucherCode"));
+            //表体数据
+            JSONArray jsonArray = new JSONArray(details);
+            final JSONObject info = jsonArray.getJSONObject(0);
+            RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
+            vision(info, relativeLayout2);
+            tb_zhtm.addView(relativeLayout2);
+            list.add(json.getString("SourceVoucherCode"));
+            list1.add(list.get(0));
+            list.clear();
+        }else {
+            list.add(json.getString("SourceVoucherCode"));
+            if (isRepeat()){
+                Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
+                etDjtm.setText("");
+                list.clear();
+            } else {
+                etDjtm.setText("");
+                etDjtm.setHint(json.getString("SourceVoucherCode"));
+                etCkbm.setText(json.getString("SourceVoucherCode"));
+                etGfbm.setText(json.getString("SourceVoucherCode"));
+                //表体数据
+                JSONArray jsonArray = new JSONArray(details);
+                final JSONObject info = jsonArray.getJSONObject(0);
+                RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
+                vision(info, relativeLayout2);
+                tb_zhtm.addView(relativeLayout2);
+                list.add(json.getString("SourceVoucherCode"));
+                list1.add(list.get(0));
+                list.clear();
             }
-            startActivity(intent2);
-        });
-        txt1.setFocusableInTouchMode(false);
+        }
+    }
 
-        txt1 = relativeLayout2.findViewById(R.id.list_1_2);
-        txt1.setText(info.getString("InventoryName"));
-        txt1.setFocusableInTouchMode(false);
+    private void vision(JSONObject info, RelativeLayout relativeLayout2) throws JSONException {
+            MyTableTextView1 txt1 = relativeLayout2.findViewById(R.id.list_1_1);
+            txt1.setText(info.getString("InventoryCode"));
+            txt1.setOnClickListener(v -> {
+                Intent intent2 = new Intent(DocumentActivity.this, BigVerifyActivity.class);
+                try {
+                    intent2.putExtra("InventoryCode", info.getString("InventoryCode"));//键值对 后面的值为传的内容
+                    intent2.putExtra("Inventoryname", info.getString("Inventoryname"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                startActivity(intent2);
+            });
+            txt1.setFocusableInTouchMode(false);
 
-        txt1 = relativeLayout2.findViewById(R.id.list_1_3);
-        txt1.setText(info.getString("Specifications"));
-        txt1.setFocusableInTouchMode(false);
+            txt1 = relativeLayout2.findViewById(R.id.list_1_2);
+            txt1.setText(info.getString("InventoryName"));
+            txt1.setFocusableInTouchMode(false);
 
-        txt1 = relativeLayout2.findViewById(R.id.list_1_4);
-        txt1.setText(info.getString("Quantity"));
-        txt1.setFocusableInTouchMode(false);
+            txt1 = relativeLayout2.findViewById(R.id.list_1_3);
+            txt1.setText(info.getString("Specifications"));
+            txt1.setFocusableInTouchMode(false);
 
-        txt1 = relativeLayout2.findViewById(R.id.list_1_5);
-        txt1.setText(info.getString("Storehouse"));
-        txt1.setFocusableInTouchMode(false);
+            txt1 = relativeLayout2.findViewById(R.id.list_1_4);
+            txt1.setText(info.getString("Quantity"));
+            txt1.setFocusableInTouchMode(false);
 
-        txt1 = relativeLayout2.findViewById(R.id.list_1_6);
-        txt1.setText(info.getString("InventoryCode"));
-        txt1.setFocusableInTouchMode(false);
+            txt1 = relativeLayout2.findViewById(R.id.list_1_5);
+            txt1.setText(info.getString("Storehouse"));
+            txt1.setFocusableInTouchMode(false);
 
-        txt1 = relativeLayout2.findViewById(R.id.list_1_7);
-        txt1.setText(info.getString("InventoryCode"));
-        txt1.setFocusableInTouchMode(false);
+            txt1 = relativeLayout2.findViewById(R.id.list_1_6);
+            txt1.setText(info.getString("InventoryCode"));
+            txt1.setFocusableInTouchMode(false);
 
-        txt1 = relativeLayout2.findViewById(R.id.list_1_8);
-        txt1.setText(info.getString("InventoryCode"));
-        txt1.setFocusableInTouchMode(false);
+            txt1 = relativeLayout2.findViewById(R.id.list_1_7);
+            txt1.setText(info.getString("InventoryCode"));
+            txt1.setFocusableInTouchMode(false);
 
-        txt1 = relativeLayout2.findViewById(R.id.list_1_9);
-        txt1.setText(info.getString("InventoryCode"));
-        txt1.setFocusableInTouchMode(false);
+            txt1 = relativeLayout2.findViewById(R.id.list_1_8);
+            txt1.setText(info.getString("InventoryCode"));
+            txt1.setFocusableInTouchMode(false);
 
-        tb_zhtm.addView(relativeLayout2);
-//	    }
+            txt1 = relativeLayout2.findViewById(R.id.list_1_9);
+            txt1.setText(info.getString("InventoryCode"));
+            txt1.setFocusableInTouchMode(false);
 
-//        DialogUtils.requestMsgPermission(this);//自定义样式调用
-//        if (list.get(0).equals(info.getString("InventoryCode"))) {
-//            CustomDialogFragment
-//                    .create(getSupportFragmentManager())
-//                    .setTitle("系统提示：")
-//                    .setContent("当前数据匹配，请继续！")
-//                    .setDimAmount(0.2f)
-//                    .setTag("dialog")
-//                    .setCancelOutside(true)
-//                    .setOkListener(v -> {
-//                        CustomDialogFragment.dismissDialogFragment();
-//                        Intent intent = new Intent(DocumentActivity.this, SmallVerifyActivity.class);
-//                        startActivity(intent);
-//                    })
-//                    .show();
-//        } else {
-//            CustomDialogFragment
-//                    .create(getSupportFragmentManager())
-//                    .setTitle("系统提示：")
-//                    .setContent("当前数据不匹配，请检查！")
-//                    .setDimAmount(0.2f)
-//                    .setTag("dialog")
-//                    .setCancelOutside(true)
-//                    .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
-//                    .show();
-//        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -281,19 +243,7 @@ public class DocumentActivity extends AppCompatActivity {
         mContext = DocumentActivity.this;
         bt_hd.setOnClickListener(v -> {
 //				//TODO 核对并弹出对话框
-////				check();
-//				builder = new AlertDialog.Builder(BigVerifyActivity.this);
-//				alert = builder
-//						.setIcon(R.mipmap.alert)
-//						.setTitle("ϵͳ��ʾ��")
-//						.setMessage("����ƥ�䣬�������")
-//						.setPositiveButton("ȷ��",
-//								new DialogInterface.OnClickListener() {
-//									@Override
-//									public void onClick( DialogInterface dialog, int which) {
-//									}
-//								}).create();
-//				alert.show();
+
         });
         bt_hd.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -356,6 +306,17 @@ public class DocumentActivity extends AppCompatActivity {
         return matcher.find();
     }
 
+    //判断是否有重复
+    public boolean isRepeat() {
+        boolean r = false;
+        for (int i = 0; i < list1.size(); i++) {
+            if (list.get(0).contains(list1.get(i))) {
+                r = true;
+            }
+        }
+        return r;
+    }
+
     //纸盒条码表体标题显示
     private void tableview_zhtm() {
         //纸盒条码
@@ -392,10 +353,7 @@ public class DocumentActivity extends AppCompatActivity {
         title.setText(name_zhtm[7]);
         title.setTextColor(getResources().getColor(R.color.tabletext_black));
         title.setFocusableInTouchMode(false);
-        title = rl_zhtm.findViewById(R.id.list_1_9);
-        title.setText(name_zhtm[8]);
-        title.setTextColor(getResources().getColor(R.color.tabletext_black));
-        title.setFocusableInTouchMode(false);
+
         tb_zhtm.addView(rl_zhtm);
     }
 

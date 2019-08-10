@@ -30,7 +30,31 @@
     <!-- 扫描纸盒条码 -->
 
     <LinearLayout
+        style="@style/InputBoxStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="单据号：" />
+
+        <EditText
+            android:id="@+id/et_djtm"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true">
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
         style="@style/InputBoxStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,16 +65,40 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="单号：" />
+            android:text="仓库编码：" />
 
         <EditText
-            android:id="@+id/et_djtm"
+            android:focusable="false"
+            android:id="@+id/et_ckbm"
             style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true">
 
-            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/InputBoxStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="供方编码：" />
+
+        <EditText
+            android:focusable="false"
+            android:id="@+id/et_gfbm"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true">
+
         </EditText>
     </LinearLayout>
 
@@ -86,11 +134,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp">
+        android:visibility="gone">
 
         <Button
             android:id="@+id/bt_hd"
@@ -104,11 +152,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp">
+        android:visibility="gone">
 
         <Button
             android:id="@+id/bt_jx"
