@@ -102,7 +102,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            if (isLegal(et_str_wlbq) == false) {
+            if (!isLegal(et_str_wlbq)) {
                 //结束loading
                 ViewLoading.dismiss(mContext);
                 Toast.makeText(SmallVerifyActivity.this, "无效数据，请重试", Toast.LENGTH_SHORT).show();
@@ -260,8 +260,8 @@ public class SmallVerifyActivity extends AppCompatActivity {
 
     //返回扫码数据的方法
     public void indata() {
-        tb_wlbq.removeAllViews();
-        tableview_wlbq();
+//        tb_wlbq.removeAllViews();
+//        tableview_wlbq();
         String str = et_wlbq.getText().toString();
 
         StringTokenizer st = new StringTokenizer(str, "\\|");
@@ -273,8 +273,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
         et_wlbq.setHint(str1);
         relativeLayout1 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_wlbq, null);
 
-        MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
-        txt.setText(list.get(1));
+        vision(relativeLayout1);
 
 //        txt = relativeLayout1.findViewById(R.id.list_1_2);
 //        txt.setText(list.get(2));
