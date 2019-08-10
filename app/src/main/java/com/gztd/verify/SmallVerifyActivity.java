@@ -132,14 +132,6 @@ public class SmallVerifyActivity extends AppCompatActivity {
                 txt.setText(list.get(0));
                 txt.setFocusableInTouchMode(false);
                 list1.add(list.get(0));
-                txt.setOnClickListener(v -> {
-                    Intent intent3 = new Intent(SmallVerifyActivity.this, SmallVerifyActivity.class);
-
-                    intent3.putExtra("InventoryCode", list1.get(0));//键值对 后面的值为传的内容
-                    intent3.putExtra("Inventoryname", list1.get(0));
-
-                    startActivity(intent3);
-                });
                 list.clear();
                 checkMatch();
                 tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));
