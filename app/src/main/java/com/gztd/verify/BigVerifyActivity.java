@@ -23,7 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gztd.test01.MainActivity;
 import com.gztd.test01.R;
 import com.pedaily.yc.ycdialoglib.dialog.loading.ViewLoading;
 import com.pedaily.yc.ycdialoglib.fragment.CustomDialogFragment;
@@ -274,7 +273,6 @@ public class BigVerifyActivity extends AppCompatActivity {
     }
 
     private void vision(RelativeLayout relativeLayout1) {
-        int num = 0;
         //relativeLayout1如果为空，就是第一次扫码，不需要判断
         if (relativeLayout1 == null) {
             MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
@@ -282,9 +280,8 @@ public class BigVerifyActivity extends AppCompatActivity {
             txt.setFocusableInTouchMode(false);
             list1.add(list.get(0));
             list.clear();
-            num++;
-            String count = String.valueOf(num);
-            tvCount.setText(count);
+            checkMatch();
+            tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));
         } else {
             //判断不重复
             if (!isRepeat()) {
@@ -294,9 +291,7 @@ public class BigVerifyActivity extends AppCompatActivity {
                 list1.add(list.get(0));
                 list.clear();
                 checkMatch();
-                num++;
-                String count = String.valueOf(num);
-                tvCount.setText(count);
+                tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));
             } else {
                 Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
                 relativeLayout1.removeAllViews();
@@ -348,9 +343,7 @@ public class BigVerifyActivity extends AppCompatActivity {
         });
 
         top_back.setOnClickListener(v -> {
-            Intent intent = new Intent(BigVerifyActivity.this, MainActivity.class);
             finish();
-            startActivity(intent);
         });
 
         // 纸盒条码的扫描监听
@@ -456,8 +449,6 @@ public class BigVerifyActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(BigVerifyActivity.this, MainActivity.class);
         finish();
-        startActivity(intent);
     }
 }
