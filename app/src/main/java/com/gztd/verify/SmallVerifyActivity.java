@@ -223,9 +223,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
         });
 
         top_back = findViewById(R.id.top_back);
-        top_back.setOnClickListener(v -> {
-            finish();
-        });
+        top_back.setOnClickListener(v -> finish());
 
         // 物料标签的扫描监听
         et_wlbq.addTextChangedListener(new TextWatcher() {
