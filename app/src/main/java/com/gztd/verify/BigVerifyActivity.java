@@ -60,7 +60,6 @@ public class BigVerifyActivity extends AppCompatActivity {
     private Context mContext;
     List<String> list = new ArrayList<>();
     List<String> list1 = new ArrayList<>();
-    List<String> list2 = new ArrayList<>();
     private String num;
     private int number = 1;
     private String str1;
@@ -212,11 +211,6 @@ public class BigVerifyActivity extends AppCompatActivity {
                 intent3.putExtra("Code4", txt.getText().toString());//件数
                 num = list.get(3);
                 list1.add(list.get(0));
-                list2.clear();
-                list2.add(list.get(0));
-                list2.add(list.get(1));
-                list2.add(list.get(2));
-                list2.add(list.get(3));
                 list.clear();
 //                checkMatch();
                 //扫码次数合计
