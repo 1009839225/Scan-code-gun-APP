@@ -187,28 +187,34 @@ public class BigVerifyActivity extends AppCompatActivity {
                 txt.setText(String.valueOf(number));
                 number++;
                 txt.setFocusableInTouchMode(false);
+
                 MyTableTextView1 finalTxt = txt;
                 Intent intent3 = new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
                 txt.setOnClickListener(v -> {
                     intent3.putExtra("Code0", finalTxt.getText().toString());//行号
                     startActivity(intent3);
                 });
+
                 txt = relativeLayout1.findViewById(R.id.list_1_2);
                 txt.setText(list.get(0));
                 txt.setFocusableInTouchMode(false);
                 intent3.putExtra("Code1", txt.getText().toString());//唯一编号
+
                 txt = relativeLayout1.findViewById(R.id.list_1_3);
                 txt.setText(list.get(1));
                 txt.setFocusableInTouchMode(false);
                 intent3.putExtra("Code2", txt.getText().toString());//代号
+
                 txt = relativeLayout1.findViewById(R.id.list_1_4);
                 txt.setText(list.get(2));
                 txt.setFocusableInTouchMode(false);
                 intent3.putExtra("Code3", txt.getText().toString());//重量
+
                 txt = relativeLayout1.findViewById(R.id.list_1_5);
                 txt.setText(list.get(3));
                 txt.setFocusableInTouchMode(false);
                 intent3.putExtra("Code4", txt.getText().toString());//件数
+
                 num = list.get(3);
                 list1.add(list.get(0));
                 list.clear();

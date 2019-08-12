@@ -11,7 +11,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -78,7 +77,6 @@ public class SmallVerifyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_verify_small);
         ButterKnife.bind(this);
         init();
@@ -116,16 +114,6 @@ public class SmallVerifyActivity extends AppCompatActivity {
     }
 
     private void vision(RelativeLayout relativeLayout1) {
-        //relativeLayout1如果为空，就是第一次扫码，不需要判断
-        if (relativeLayout1 == null) {
-            MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
-            txt.setText(list.get(0));
-            txt.setFocusableInTouchMode(false);
-            list1.add(list.get(0));
-            list.clear();
-//            checkMatch();
-            tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));
-        } else {
             //判断不重复
             if (!isRepeat()) {
                 MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
@@ -156,7 +144,6 @@ public class SmallVerifyActivity extends AppCompatActivity {
                 relativeLayout1.removeAllViews();
                 list.clear();
             }
-        }
     }
 
     //判断是否有重复
