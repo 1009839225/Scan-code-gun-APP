@@ -61,12 +61,12 @@ public class DocumentActivity extends AppCompatActivity {
     private Context mContext;
     private String beforeresult;
     private String str1;
-    private String[] name_zhtm = {"代号", "牌号", "图号", "生产批号", "数量", "件数", "带材批号", "材料编号"};
+    private String[] name_zhtm = {"行号","代号", "牌号", "图号", "生产批号", "数量", "件数", "带材批号", "材料编号"};
     List<String> list = new ArrayList<>();
     List<String> list1 = new ArrayList<>();
     private Handler handler_zhtm = new Handler();
     private String et_str_zhtm;
-
+    private int num = 1;
     private ProgressDialog dialog;
 
     private Runnable delayRun_zhtm = new Runnable() {
@@ -159,7 +159,7 @@ public class DocumentActivity extends AppCompatActivity {
             //表体数据
             JSONArray jsonArray = new JSONArray(details);
             final JSONObject info = jsonArray.getJSONObject(0);
-            RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
+            RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_djtm, null);
             vision(info, relativeLayout2);
             tb_zhtm.addView(relativeLayout2);
             list.add(json.getString("SourceVoucherCode"));
@@ -182,7 +182,7 @@ public class DocumentActivity extends AppCompatActivity {
                 //表体数据
                 JSONArray jsonArray = new JSONArray(details);
                 final JSONObject info = jsonArray.getJSONObject(0);
-                RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
+                RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_djtm, null);
                 vision(info, relativeLayout2);
                 tb_zhtm.addView(relativeLayout2);
                 list.add(json.getString("SourceVoucherCode"));
@@ -194,12 +194,22 @@ public class DocumentActivity extends AppCompatActivity {
 
     private void vision(JSONObject info, RelativeLayout relativeLayout2) throws JSONException {
             MyTableTextView1 txt1 = relativeLayout2.findViewById(R.id.list_1_1);
-            txt1.setText(info.getString("InventoryCode"));
+            txt1.setText(String.valueOf(num));
+            num++;
+            MyTableTextView1 finalTxt = txt1;
             txt1.setOnClickListener(v -> {
                 Intent intent2 = new Intent(DocumentActivity.this, BigVerifyActivity.class);
                 try {
-                    intent2.putExtra("InventoryCode", info.getString("InventoryCode"));//键值对 后面的值为传的内容
-                    intent2.putExtra("Inventoryname", info.getString("Inventoryname"));
+                    //将获取到的8个表体数据以及行号传过去
+                    intent2.putExtra("Code0", finalTxt.getText().toString());//行号
+                    intent2.putExtra("Code1", info.getString("Code"));//代号
+                    intent2.putExtra("Code2", info.getString("Code"));//牌号
+                    intent2.putExtra("Code3", info.getString("Code"));//图号
+                    intent2.putExtra("Code4", info.getString("Code"));//生产批号
+                    intent2.putExtra("Code5", info.getString("Code"));//数量
+                    intent2.putExtra("Quantity", info.getString("Quantity"));//件数
+                    intent2.putExtra("Code7", info.getString("Code"));//带材批号
+                    intent2.putExtra("Code8", info.getString("Code"));//材料编号
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -208,35 +218,31 @@ public class DocumentActivity extends AppCompatActivity {
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_2);
-            txt1.setText(info.getString("InventoryName"));
+            txt1.setText(info.getString("Code"));
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_3);
-            txt1.setText(info.getString("Specifications"));
+            txt1.setText(info.getString("Code"));
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_4);
-            txt1.setText(info.getString("Quantity"));
+            txt1.setText(info.getString("Code"));
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_5);
-            txt1.setText(info.getString("Storehouse"));
+            txt1.setText(info.getString("Code"));
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_6);
-            txt1.setText(info.getString("InventoryCode"));
+            txt1.setText(info.getString("Quantity"));
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_7);
-            txt1.setText(info.getString("InventoryCode"));
+            txt1.setText(info.getString("Quantity"));
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_8);
-            txt1.setText(info.getString("InventoryCode"));
-            txt1.setFocusableInTouchMode(false);
-
-            txt1 = relativeLayout2.findViewById(R.id.list_1_9);
-            txt1.setText(info.getString("InventoryCode"));
+            txt1.setText(info.getString("Code"));
             txt1.setFocusableInTouchMode(false);
 
     }
@@ -323,7 +329,7 @@ public class DocumentActivity extends AppCompatActivity {
     //纸盒条码表体标题显示
     private void tableview_zhtm() {
         //纸盒条码
-        RelativeLayout rl_zhtm = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
+        RelativeLayout rl_zhtm = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_djtm, null);
         MyTableTextView1 title = rl_zhtm.findViewById(R.id.list_1_1);
         title.setText(name_zhtm[0]);
         title.setTextColor(getResources().getColor(R.color.tabletext_black));
@@ -354,6 +360,10 @@ public class DocumentActivity extends AppCompatActivity {
         title.setFocusableInTouchMode(false);
         title = rl_zhtm.findViewById(R.id.list_1_8);
         title.setText(name_zhtm[7]);
+        title.setTextColor(getResources().getColor(R.color.tabletext_black));
+        title.setFocusableInTouchMode(false);
+        title = rl_zhtm.findViewById(R.id.list_1_9);
+        title.setText(name_zhtm[8]);
         title.setTextColor(getResources().getColor(R.color.tabletext_black));
         title.setFocusableInTouchMode(false);
 

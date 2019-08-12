@@ -130,4 +130,43 @@
         android:textColor="#000"
         android:textSize="16sp" />
 
+    <util.MyTableTextView1
+        android:focusable="false"
+        android:id="@+id/list_1_11"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/list_1_10"
+        android:layout_alignTop="@+id/list_1_10"
+        android:layout_toRightOf="@+id/list_1_10"
+        android:gravity="center"
+        android:background="@null"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <util.MyTableTextView1
+        android:focusable="false"
+        android:id="@+id/list_1_12"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/list_1_11"
+        android:layout_alignTop="@+id/list_1_11"
+        android:layout_toRightOf="@+id/list_1_11"
+        android:gravity="center"
+        android:background="@null"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <util.MyTableTextView1
+        android:focusable="false"
+        android:id="@+id/list_1_13"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/list_1_12"
+        android:layout_alignTop="@+id/list_1_12"
+        android:layout_toRightOf="@+id/list_1_12"
+        android:gravity="center"
+        android:background="@null"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
 </RelativeLayout>

@@ -119,7 +119,7 @@ public class BigVerifyActivity extends Activity {
         et_zhtm.setText("");
         String str1 = list.get(0);
         et_zhtm.setHint(str1);
-        relativeLayout1 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
+        relativeLayout1 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_djtm, null);
 
         MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
         txt.setText(list.get(1));
@@ -245,7 +245,7 @@ public class BigVerifyActivity extends Activity {
 
     //纸盒条码表体标题显示
     private void tableview_zhtm() {
-        rl_zhtm = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
+        rl_zhtm = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_djtm, null);
         MyTableTextView1 title = rl_zhtm.findViewById(R.id.list_1_1);
         title.setText(name_zhtm[0]);
         title.setTextColor(getResources().getColor(R.color.tabletext_black));

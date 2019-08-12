@@ -1,17 +1,14 @@
 package com.gztd.verify;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.Window;
@@ -28,10 +25,6 @@ import com.pedaily.yc.ycdialoglib.dialog.loading.ViewLoading;
 import com.pedaily.yc.ycdialoglib.fragment.CustomDialogFragment;
 import com.pedaily.yc.ycdialoglib.utils.DialogUtils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -40,7 +33,6 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import util.GetTable_ST_ProductReceive;
 import util.MyTableTextView1;
 
 public class BigVerifyActivity extends AppCompatActivity {
@@ -63,19 +55,24 @@ public class BigVerifyActivity extends AppCompatActivity {
     EditText etBtz4;
     @BindView(R.id.tv_count)
     TextView tvCount;
+    @BindView(R.id.tv_num)
+    TextView tvNum;
 
     private Context mContext;
     List<String> list = new ArrayList<>();
     List<String> list1 = new ArrayList<>();
+    List<String> list2 = new ArrayList<>();
+    private String num;
+    private int number = 1;
     private String beforeresult;
     private String str1;
-    private String inventoryCode;
-    private String[] name_zhtm = {"代号", "牌号", "图号", "规格型号", "冲压号", "数量", "件数", "带材批号（复合批号）", "是否匹配入库单", "9", "10"};
+    private String Quantity;
+    private String[] name_zhtm = {"行号","唯一编号", "代号", "重量", "件数", "自由项1", "自由项2", "自由项3", "自由项4",
+            "自由项5", "自由项6", "自由项7", "自由项8", "自由项9", "自由项10"};
 
     private Handler handler_zhtm = new Handler();
     private String et_str_zhtm;
-
-    private ProgressDialog dialog;
+    private String Code1;
 
     private Runnable delayRun_zhtm = new Runnable() {
 
@@ -112,16 +109,6 @@ public class BigVerifyActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            try {
-                Log.e("2", "2");
-                SharedPreferences sp = mContext.getSharedPreferences("mysp2", Context.MODE_PRIVATE);
-                String AccNum = sp.getString("userwb", "");
-                String Addressurl = "http://" + AccNum + "/WebService_T_YM.asmx";
-                beforeresult = GetTable_ST_ProductReceive.getland(params[0], Addressurl);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            // 将结果返回给onPostExecute方法
             return beforeresult;
         }
 
@@ -134,29 +121,14 @@ public class BigVerifyActivity extends AppCompatActivity {
                 etRkdh.setText("");
             } else {
                 ViewLoading.dismiss(mContext);
-                try {
-                    JSONObject info1 = new JSONObject(result);
-                    String s = info1.getString("Details");// 表体
-                    JSONArray jsonArray = new JSONArray(s);
-                    if (jsonArray.length() != 0) {
-                        indata(s);
-                    } else {
-                        Toast.makeText(BigVerifyActivity.this, "没有数据", Toast.LENGTH_SHORT).show();
-                        etRkdh.setText("");
-                    }
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                indata();
             }
-
         }
     }
 
-    //返回扫码数据并核对
-    public void indata(String s) throws JSONException {
 
-//        tableview_zhtm();
+    //返回扫码数据并核对
+    public void indata() {
         String str = etRkdh.getText().toString();
 
         StringTokenizer st = new StringTokenizer(str, "\\|");
@@ -171,75 +143,9 @@ public class BigVerifyActivity extends AppCompatActivity {
 
         //码上数据
         RelativeLayout relativeLayout1 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
-
         vision(relativeLayout1);
 
-
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_2);
-//			txt.setText(list.get(2));
-//
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_3);
-//			txt.setText(list.get(3));
-//
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_4);
-//			txt.setText(list.get(4));
-//
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_5);
-//			txt.setText(list.get(5));
-//
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_6);
-//			txt.setText(list.get(6));
-//			
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_7);
-//			txt.setText(list.get(7));
-//
-//			txt = (MyTableTextView1) relativeLayout1.findViewById(R.id.list_1_8);
-//			txt.setText(list.get(8));
-
         tb_zhtm.addView(relativeLayout1);
-//		} else {
-//			Toast.makeText(BigVerifyActivity.this, "��Ч���ݣ�������", Toast.LENGTH_SHORT).show();
-//			et_zhtm.setText("");
-//		}
-
-
-//        //开始获取大盒子数据
-//        JSONArray jsonArray = new JSONArray(s);
-//        final JSONObject info = jsonArray.getJSONObject(0);
-////	    if (str1.length()>0) {
-//
-//        RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_zhtm, null);
-//
-//        MyTableTextView1 txt1 = relativeLayout2.findViewById(R.id.list_1_1);
-//        txt1.setText(info.getString("InventoryCode"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_2);
-//        txt1.setText(info.getString("InventoryName"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_3);
-//        txt1.setText(info.getString("Specifications"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_4);
-//        txt1.setText(info.getString("Quantity"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_5);
-//        txt1.setText(info.getString("Storehouse"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_6);
-//        txt1.setText(info.getString("InventoryCode"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_7);
-//        txt1.setText(info.getString("InventoryCode"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_8);
-//        txt1.setText(info.getString("InventoryCode"));
-//
-//        txt1 = relativeLayout2.findViewById(R.id.list_1_9);
-//        txt1.setText(info.getString("InventoryCode"));
-//
-//        tb_zhtm.addView(relativeLayout2);
-//	    }
-
 
     }
 
@@ -247,16 +153,20 @@ public class BigVerifyActivity extends AppCompatActivity {
         DialogUtils.requestMsgPermission(this);//自定义样式调用
 
         //这里判断是否匹配
-        if (str1.equals(inventoryCode)) {
-            CustomDialogFragment
-                    .create(getSupportFragmentManager())
-                    .setTitle("系统提示：")
-                    .setContent("当前数据匹配，请继续！")
-                    .setDimAmount(0.2f)
-                    .setTag("dialog")
-                    .setCancelOutside(true)
-                    .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
-                    .show();
+        //如果代号匹配了
+        if (str1.equals(Code1)) {
+            if (Quantity.equals(tvNum.getText())){
+
+            }
+//            CustomDialogFragment
+//                    .create(getSupportFragmentManager())
+//                    .setTitle("系统提示：")
+//                    .setContent("当前数据匹配，请继续！")
+//                    .setDimAmount(0.2f)
+//                    .setTag("dialog")
+//                    .setCancelOutside(true)
+//                    .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
+//                    .show();
         } else {
             CustomDialogFragment
                     .create(getSupportFragmentManager())
@@ -276,28 +186,73 @@ public class BigVerifyActivity extends AppCompatActivity {
             MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
             txt.setText(list.get(0));
             txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_2);
+            txt.setText(list.get(1));
+            txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_3);
+            txt.setText(list.get(2));
+            txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_4);
+            txt.setText(list.get(3));
+            txt.setFocusableInTouchMode(false);
+            num = list.get(3);
             list1.add(list.get(0));
             list.clear();
-            checkMatch();
+//            checkMatch();
+            //扫码次数合计
             tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));
+            //件数的累加
+            double n1 = Double.parseDouble(tvNum.getText().toString());
+            double n2 = Double.parseDouble(num);
+
+            double res = n1 + n2;
+
+            tvNum.setText(String.valueOf(res));
         } else {
             //判断不重复
             if (!isRepeat()) {
                 MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
-                txt.setText(list.get(0));
+                txt.setText(String.valueOf(number));
+                number++;
                 txt.setFocusableInTouchMode(false);
-                list1.add(list.get(0));
+                MyTableTextView1 finalTxt = txt;
                 txt.setOnClickListener(v -> {
-                    Intent intent3= new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
-
-                    intent3.putExtra("InventoryCode", list1.get(0));//键值对 后面的值为传的内容
-                    intent3.putExtra("Inventoryname", list1.get(0));
-
+                    Intent intent3 = new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
+                    intent3.putExtra("Code0", finalTxt.getText().toString());//行号
+                    intent3.putExtra("Code1", list2.get(0));//唯一编号
+                    intent3.putExtra("Code2", list2.get(1));//代号
+                    intent3.putExtra("Code3", list2.get(2));//重量
+                    intent3.putExtra("Code4", list2.get(3));//件数
+                    list2.clear();
                     startActivity(intent3);
                 });
+                txt = relativeLayout1.findViewById(R.id.list_1_2);
+                txt.setText(list.get(0));
+                txt.setFocusableInTouchMode(false);
+                txt = relativeLayout1.findViewById(R.id.list_1_3);
+                txt.setText(list.get(1));
+                txt.setFocusableInTouchMode(false);
+                txt = relativeLayout1.findViewById(R.id.list_1_4);
+                txt.setText(list.get(2));
+                txt.setFocusableInTouchMode(false);
+                txt = relativeLayout1.findViewById(R.id.list_1_4);
+                txt.setText(list.get(3));
+                txt.setFocusableInTouchMode(false);
+                num = list.get(3);
+                list1.add(list.get(0));
+                list2.add(list.get(0));
+                list2.add(list.get(1));
+                list2.add(list.get(2));
+                list2.add(list.get(3));
                 list.clear();
-                checkMatch();
+//                checkMatch();
+                //扫码次数合计
                 tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));
+                //件数的累加
+                double n1 = Double.parseDouble(tvNum.getText().toString());
+                double n2 = Double.parseDouble(num);
+                double res = n1 + n2;
+                tvNum.setText(String.valueOf(res));
             } else {
                 Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
                 relativeLayout1.removeAllViews();
@@ -310,20 +265,8 @@ public class BigVerifyActivity extends AppCompatActivity {
     private void init() {
         mContext = BigVerifyActivity.this;
         bt_hd.setOnClickListener(v -> {
-//				//TODO 核对并弹出对话框
-////				check();
-//				builder = new AlertDialog.Builder(BigVerifyActivity.this);
-//				alert = builder
-//						.setIcon(R.mipmap.alert)
-//						.setTitle("ϵͳ��ʾ��")
-//						.setMessage("����ƥ�䣬�������")
-//						.setPositiveButton("ȷ��",
-//								new DialogInterface.OnClickListener() {
-//									@Override
-//									public void onClick( DialogInterface dialog, int which) {
-//									}
-//								}).create();
-//				alert.show();
+            //TODO 核对并弹出对话框
+            checkMatch();
         });
         bt_hd.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -348,9 +291,7 @@ public class BigVerifyActivity extends AppCompatActivity {
             return false;
         });
 
-        top_back.setOnClickListener(v -> {
-            finish();
-        });
+        top_back.setOnClickListener(v -> finish());
 
         // 纸盒条码的扫描监听
         etRkdh.addTextChangedListener(new TextWatcher() {
@@ -377,11 +318,15 @@ public class BigVerifyActivity extends AppCompatActivity {
         tableview_zhtm();
         //Intent传值存储单据界面传过来的数据
         Intent intent2 = getIntent();
-        etCkbm.setText(intent2.getStringExtra("InventoryCode"));
-        etGhdw.setText(intent2.getStringExtra("inventory"));
-        etBtz4.setText(intent2.getStringExtra("inventory"));
-
-        inventoryCode = intent2.getStringExtra("InventoryCode");
+        etCkbm.setText(intent2.getStringExtra("Code0"));//行号
+        Code1 = intent2.getStringExtra("Code1");//代号
+        String Code2 = intent2.getStringExtra("Code2");//牌号
+        String Code3 = intent2.getStringExtra("Code3");//图号
+        String Code4 = intent2.getStringExtra("Code4");//生产批号
+        String Code5 = intent2.getStringExtra("Code5");//数量
+        Quantity = intent2.getStringExtra("Quantity");//件数
+        String Code7 = intent2.getStringExtra("Code7");//带材批号
+        String Code8 = intent2.getStringExtra("Code8");//材料编号
     }
 
     //正则表达式判断字符输入合法性
@@ -401,14 +346,6 @@ public class BigVerifyActivity extends AppCompatActivity {
         }
         return r;
     }
-
-//    // 动态文本工具方法
-//    public void DynamicSetTextTool(int stringId, Object changeText, int viewId) {
-//        String RefreshTime = getResources().getString(stringId);
-//        String FinalRefreshTime = String.format(RefreshTime, changeText);
-//        TextView RefreshTextObject = findViewById(viewId);
-//        RefreshTextObject.setText(FinalRefreshTime);
-//    }
 
     //纸盒条码表体标题显示
     private void tableview_zhtm() {
@@ -448,6 +385,30 @@ public class BigVerifyActivity extends AppCompatActivity {
         title.setFocusableInTouchMode(false);
         title = rl_zhtm.findViewById(R.id.list_1_9);
         title.setText(name_zhtm[8]);
+        title.setTextColor(getResources().getColor(R.color.tabletext_black));
+        title.setFocusableInTouchMode(false);
+        title = rl_zhtm.findViewById(R.id.list_1_10);
+        title.setText(name_zhtm[9]);
+        title.setTextColor(getResources().getColor(R.color.tabletext_black));
+        title.setFocusableInTouchMode(false);
+        title = rl_zhtm.findViewById(R.id.list_1_11);
+        title.setText(name_zhtm[10]);
+        title.setTextColor(getResources().getColor(R.color.tabletext_black));
+        title.setFocusableInTouchMode(false);
+        title = rl_zhtm.findViewById(R.id.list_1_12);
+        title.setText(name_zhtm[11]);
+        title.setTextColor(getResources().getColor(R.color.tabletext_black));
+        title.setFocusableInTouchMode(false);
+        title = rl_zhtm.findViewById(R.id.list_1_13);
+        title.setText(name_zhtm[12]);
+        title.setTextColor(getResources().getColor(R.color.tabletext_black));
+        title.setFocusableInTouchMode(false);
+        title = rl_zhtm.findViewById(R.id.list_1_14);
+        title.setText(name_zhtm[13]);
+        title.setTextColor(getResources().getColor(R.color.tabletext_black));
+        title.setFocusableInTouchMode(false);
+        title = rl_zhtm.findViewById(R.id.list_1_15);
+        title.setText(name_zhtm[14]);
         title.setTextColor(getResources().getColor(R.color.tabletext_black));
         title.setFocusableInTouchMode(false);
         tb_zhtm.addView(rl_zhtm);
