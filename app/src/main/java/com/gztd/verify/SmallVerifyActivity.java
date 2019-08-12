@@ -49,7 +49,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
     private ImageButton top_back;// 返回上一页按钮
     private String str1;
     String num;
-    private String Code0;
+    private String Code0,Code1,Code2,Code3,Code4;
     private RelativeLayout rl_wlbq;// 物料标签
     private LinearLayout tb_wlbq;// 物料标签表体标题
     List<String> list = new ArrayList<>();
@@ -181,27 +181,33 @@ public class SmallVerifyActivity extends AppCompatActivity {
         DialogUtils.requestMsgPermission(this);//自定义样式调用
 
         //这里判断是否匹配
-        if (str1.equals(Code0)) {
-            CustomDialogFragment
-                    .create(getSupportFragmentManager())
-                    .setTitle("系统提示：")
-                    .setContent("当前数据匹配，请继续！")
-                    .setDimAmount(0.2f)
-                    .setTag("dialog")
-                    .setCancelOutside(true)
-                    .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
-                    .show();
-        } else {
-            CustomDialogFragment
-                    .create(getSupportFragmentManager())
-                    .setTitle("系统提示：")
-                    .setContent("当前数据不匹配，请检查！")
-                    .setDimAmount(0.2f)
-                    .setTag("dialog")
-                    .setCancelOutside(true)
-                    .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
-                    .show();
+        if (str1!=null){
+            if (str1.equals(Code0)) {
+                CustomDialogFragment
+                        .create(getSupportFragmentManager())
+                        .setTitle("系统提示：")
+                        .setContent("当前数据匹配，请继续！")
+                        .setDimAmount(0.2f)
+                        .setTag("dialog")
+                        .setCancelOutside(true)
+                        .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
+                        .show();
+            } else {
+                CustomDialogFragment
+                        .create(getSupportFragmentManager())
+                        .setTitle("系统提示：")
+                        .setContent("当前数据不匹配，请检查！")
+                        .setDimAmount(0.2f)
+                        .setTag("dialog")
+                        .setCancelOutside(true)
+                        .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
+                        .show();
+            }
+            }else {
+            Toast.makeText(mContext, "你还没有扫码", Toast.LENGTH_SHORT).show();
         }
+        
+        
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -262,7 +268,10 @@ public class SmallVerifyActivity extends AppCompatActivity {
         tableview_wlbq();
         Intent intent3 = getIntent();
         etXh.setText(intent3.getStringExtra("Code0"));
-        //Code0 = intent3.getStringExtra("Code0");
+        Code1 = intent3.getStringExtra("Code1");//唯一编号
+        Code2 = intent3.getStringExtra("Code2");//代号
+        Code3 = intent3.getStringExtra("Code3");//重量
+        Code4 = intent3.getStringExtra("Code4");//件数
     }
 
     //返回扫码数据的方法

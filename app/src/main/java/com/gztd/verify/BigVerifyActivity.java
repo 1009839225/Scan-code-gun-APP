@@ -151,60 +151,37 @@ public class BigVerifyActivity extends AppCompatActivity {
 
         //这里判断是否匹配
         //如果代号匹配了
-        if (str1.equals(Code1)) {
-            if (Quantity.equals(tvNum.getText())) {
+        if (str1!=null){
+            if (str1.equals(Code1)) {
+                if (Quantity.equals(tvNum.getText())) {
+                    CustomDialogFragment
+                            .create(getSupportFragmentManager())
+                            .setTitle("系统提示：")
+                            .setContent("当前数据匹配，请继续！")
+                            .setDimAmount(0.2f)
+                            .setTag("dialog")
+                            .setCancelOutside(true)
+                            .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
+                            .show();
+                }
+            } else {
                 CustomDialogFragment
                         .create(getSupportFragmentManager())
                         .setTitle("系统提示：")
-                        .setContent("当前数据匹配，请继续！")
+                        .setContent("当前数据不匹配，请检查！")
                         .setDimAmount(0.2f)
                         .setTag("dialog")
                         .setCancelOutside(true)
                         .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
                         .show();
             }
-        } else {
-            CustomDialogFragment
-                    .create(getSupportFragmentManager())
-                    .setTitle("系统提示：")
-                    .setContent("当前数据不匹配，请检查！")
-                    .setDimAmount(0.2f)
-                    .setTag("dialog")
-                    .setCancelOutside(true)
-                    .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
-                    .show();
+        }else {
+            Toast.makeText(mContext, "你还没有扫码", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private void vision(RelativeLayout relativeLayout1) {
-        //relativeLayout1如果为空，就是第一次扫码，不需要判断
-        if (relativeLayout1 == null) {
-            MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
-            txt.setText(list.get(0));
-            txt.setFocusableInTouchMode(false);
-            txt = relativeLayout1.findViewById(R.id.list_1_2);
-            txt.setText(list.get(1));
-            txt.setFocusableInTouchMode(false);
-            txt = relativeLayout1.findViewById(R.id.list_1_3);
-            txt.setText(list.get(2));
-            txt.setFocusableInTouchMode(false);
-            txt = relativeLayout1.findViewById(R.id.list_1_4);
-            txt.setText(list.get(3));
-            txt.setFocusableInTouchMode(false);
-            num = list.get(3);
-            list1.add(list.get(0));
-            list.clear();
-//            checkMatch();
-            //扫码次数合计
-            tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));
-            //件数的累加
-            double n1 = Double.parseDouble(tvNum.getText().toString());
-            double n2 = Double.parseDouble(num);
-
-            double res = n1 + n2;
-
-            tvNum.setText(String.valueOf(res));
-        } else {
             //判断不重复
             if (!isRepeat()) {
                 MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
@@ -212,30 +189,30 @@ public class BigVerifyActivity extends AppCompatActivity {
                 number++;
                 txt.setFocusableInTouchMode(false);
                 MyTableTextView1 finalTxt = txt;
+                Intent intent3 = new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
                 txt.setOnClickListener(v -> {
-                    Intent intent3 = new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
                     intent3.putExtra("Code0", finalTxt.getText().toString());//行号
-                    intent3.putExtra("Code1", list2.get(0));//唯一编号
-                    intent3.putExtra("Code2", list2.get(1));//代号
-                    intent3.putExtra("Code3", list2.get(2));//重量
-                    intent3.putExtra("Code4", list2.get(3));//件数
-                    list2.clear();
                     startActivity(intent3);
                 });
                 txt = relativeLayout1.findViewById(R.id.list_1_2);
                 txt.setText(list.get(0));
                 txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code1", txt.getText().toString());//唯一编号
                 txt = relativeLayout1.findViewById(R.id.list_1_3);
                 txt.setText(list.get(1));
                 txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code2", txt.getText().toString());//代号
                 txt = relativeLayout1.findViewById(R.id.list_1_4);
                 txt.setText(list.get(2));
                 txt.setFocusableInTouchMode(false);
-                txt = relativeLayout1.findViewById(R.id.list_1_4);
+                intent3.putExtra("Code3", txt.getText().toString());//重量
+                txt = relativeLayout1.findViewById(R.id.list_1_5);
                 txt.setText(list.get(3));
                 txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code4", txt.getText().toString());//件数
                 num = list.get(3);
                 list1.add(list.get(0));
+                list2.clear();
                 list2.add(list.get(0));
                 list2.add(list.get(1));
                 list2.add(list.get(2));
@@ -254,7 +231,7 @@ public class BigVerifyActivity extends AppCompatActivity {
                 relativeLayout1.removeAllViews();
                 list.clear();
             }
-        }
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
