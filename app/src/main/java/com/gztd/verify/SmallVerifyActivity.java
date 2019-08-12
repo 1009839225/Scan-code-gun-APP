@@ -68,7 +68,6 @@ public class SmallVerifyActivity extends AppCompatActivity {
         @Override
         public void run() {
             if (et_str_wlbq.length() > 0) {
-                // TODO 调用服务器接口
                 load();
             } else {
                 handler_wlbq.removeCallbacks(delayRun_wlbq);
@@ -93,11 +92,11 @@ public class SmallVerifyActivity extends AppCompatActivity {
         queryAddressTask.execute(et_wlbq.getText().toString());
     }
 
+    @SuppressLint("StaticFieldLeak")
     class QueryAddressTask extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... params) {
-            // TODO Auto-generated method stub
             return null;
         }
 
@@ -173,7 +172,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
 
     //正则表达式判断字符输入合法性
     public static boolean isLegal(String content) {
-        Pattern pattern = Pattern.compile("\\|");
+        Pattern pattern = Pattern.compile("\\^");
         Matcher matcher = pattern.matcher(content);
         return matcher.find();
     }
@@ -183,15 +182,15 @@ public class SmallVerifyActivity extends AppCompatActivity {
 
         //这里判断是否匹配
         if (str1.equals(Code0)) {
-//            CustomDialogFragment
-//                    .create(getSupportFragmentManager())
-//                    .setTitle("系统提示：")
-//                    .setContent("当前数据匹配，请继续！")
-//                    .setDimAmount(0.2f)
-//                    .setTag("dialog")
-//                    .setCancelOutside(true)
-//                    .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
-//                    .show();
+            CustomDialogFragment
+                    .create(getSupportFragmentManager())
+                    .setTitle("系统提示：")
+                    .setContent("当前数据匹配，请继续！")
+                    .setDimAmount(0.2f)
+                    .setTag("dialog")
+                    .setCancelOutside(true)
+                    .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
+                    .show();
         } else {
             CustomDialogFragment
                     .create(getSupportFragmentManager())
@@ -211,10 +210,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
         et_wlbq = findViewById(R.id.et_wlbq);
         tb_wlbq = findViewById(R.id.tb_wlbq);
         bt_hd = findViewById(R.id.bt_hd);
-        bt_hd.setOnClickListener(v -> {
-            // TODO 核对
-            checkMatch();
-        });
+        bt_hd.setOnClickListener(v -> checkMatch());
 
         bt_hd.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -272,7 +268,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
     //返回扫码数据的方法
     public void indata() {
         String str = et_wlbq.getText().toString();
-        StringTokenizer st = new StringTokenizer(str, "\\|");
+        StringTokenizer st = new StringTokenizer(str, "\\^");
         while (st.hasMoreTokens()) {
             list.add(st.nextToken());
         }

@@ -32,8 +32,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -137,7 +135,6 @@ public class DocumentActivity extends AppCompatActivity {
                     etDjtm.setText("");
                 }
             } catch (JSONException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 //            }
@@ -301,18 +298,10 @@ public class DocumentActivity extends AppCompatActivity {
                 }
                 et_str_zhtm = s.toString();
                 handler_zhtm.postDelayed(delayRun_zhtm, 800);
-
             }
         });
 
         tableview_zhtm();
-    }
-
-    //正则表达式判断字符输入合法性
-    public static boolean isLegal(String content) {
-        Pattern pattern = Pattern.compile("\\|");
-        Matcher matcher = pattern.matcher(content);
-        return matcher.find();
     }
 
     //判断是否有重复

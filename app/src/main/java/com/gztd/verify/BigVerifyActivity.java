@@ -11,7 +11,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -64,10 +63,9 @@ public class BigVerifyActivity extends AppCompatActivity {
     List<String> list2 = new ArrayList<>();
     private String num;
     private int number = 1;
-    private String beforeresult;
     private String str1;
     private String Quantity;
-    private String[] name_zhtm = {"行号","唯一编号", "代号", "重量", "件数", "自由项1", "自由项2", "自由项3", "自由项4",
+    private String[] name_zhtm = {"行号", "唯一编号", "代号", "重量", "件数", "自由项1", "自由项2", "自由项3", "自由项4",
             "自由项5", "自由项6", "自由项7", "自由项8", "自由项9", "自由项10"};
 
     private Handler handler_zhtm = new Handler();
@@ -79,7 +77,6 @@ public class BigVerifyActivity extends AppCompatActivity {
         @Override
         public void run() {
             if (et_str_zhtm.length() > 0) {
-                // TODO 调用服务器接口
                 load();
             } else {
                 handler_zhtm.removeCallbacks(delayRun_zhtm);
@@ -91,7 +88,6 @@ public class BigVerifyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_verify_big);
         ButterKnife.bind(this);
         init();
@@ -105,11 +101,12 @@ public class BigVerifyActivity extends AppCompatActivity {
         queryAddressTask.execute(etRkdh.getText().toString());
     }
 
+    @SuppressLint("StaticFieldLeak")
     class QueryAddressTask extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... params) {
-            return beforeresult;
+            return null;
         }
 
         @Override
@@ -131,7 +128,7 @@ public class BigVerifyActivity extends AppCompatActivity {
     public void indata() {
         String str = etRkdh.getText().toString();
 
-        StringTokenizer st = new StringTokenizer(str, "\\|");
+        StringTokenizer st = new StringTokenizer(str, "\\^");
         while (st.hasMoreTokens()) {
             list.add(st.nextToken());
         }
@@ -155,18 +152,17 @@ public class BigVerifyActivity extends AppCompatActivity {
         //这里判断是否匹配
         //如果代号匹配了
         if (str1.equals(Code1)) {
-            if (Quantity.equals(tvNum.getText())){
-
+            if (Quantity.equals(tvNum.getText())) {
+                CustomDialogFragment
+                        .create(getSupportFragmentManager())
+                        .setTitle("系统提示：")
+                        .setContent("当前数据匹配，请继续！")
+                        .setDimAmount(0.2f)
+                        .setTag("dialog")
+                        .setCancelOutside(true)
+                        .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
+                        .show();
             }
-//            CustomDialogFragment
-//                    .create(getSupportFragmentManager())
-//                    .setTitle("系统提示：")
-//                    .setContent("当前数据匹配，请继续！")
-//                    .setDimAmount(0.2f)
-//                    .setTag("dialog")
-//                    .setCancelOutside(true)
-//                    .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
-//                    .show();
         } else {
             CustomDialogFragment
                     .create(getSupportFragmentManager())
@@ -264,10 +260,7 @@ public class BigVerifyActivity extends AppCompatActivity {
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
         mContext = BigVerifyActivity.this;
-        bt_hd.setOnClickListener(v -> {
-            //TODO 核对并弹出对话框
-            checkMatch();
-        });
+        bt_hd.setOnClickListener(v -> checkMatch());
         bt_hd.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 bt_hd.setBackgroundResource(R.drawable.button_pressed);
@@ -331,7 +324,7 @@ public class BigVerifyActivity extends AppCompatActivity {
 
     //正则表达式判断字符输入合法性
     public static boolean isLegal(String content) {
-        Pattern pattern = Pattern.compile("\\|");
+        Pattern pattern = Pattern.compile("\\^");
         Matcher matcher = pattern.matcher(content);
         return matcher.find();
     }
