@@ -99,7 +99,7 @@
     <util.MyTableTextView1
         android:focusable="false"
         android:id="@+id/list_1_8"
-        android:layout_width="200dp"
+        android:layout_width="120dp"
         android:layout_height="35dp"
         android:background="@null"
         android:layout_alignBottom="@+id/list_1_7"
@@ -113,7 +113,7 @@
     <util.MyTableTextView1
         android:focusable="false"
         android:id="@+id/list_1_9"
-        android:layout_width="200dp"
+        android:layout_width="120dp"
         android:layout_height="35dp"
         android:background="@null"
         android:layout_alignBottom="@+id/list_1_8"
@@ -127,7 +127,7 @@
     <util.MyTableTextView1
         android:focusable="false"
         android:id="@+id/list_1_10"
-        android:layout_width="200dp"
+        android:layout_width="120dp"
         android:layout_height="35dp"
         android:background="@null"
         android:layout_alignBottom="@+id/list_1_9"
@@ -141,7 +141,7 @@
     <util.MyTableTextView1
         android:focusable="false"
         android:id="@+id/list_1_11"
-        android:layout_width="200dp"
+        android:layout_width="120dp"
         android:layout_height="35dp"
         android:background="@null"
         android:layout_alignBottom="@+id/list_1_10"
@@ -155,7 +155,7 @@
     <util.MyTableTextView1
         android:focusable="false"
         android:id="@+id/list_1_12"
-        android:layout_width="200dp"
+        android:layout_width="120dp"
         android:layout_height="35dp"
         android:background="@null"
         android:layout_alignBottom="@+id/list_1_11"
@@ -169,7 +169,7 @@
     <util.MyTableTextView1
         android:focusable="false"
         android:id="@+id/list_1_13"
-        android:layout_width="200dp"
+        android:layout_width="120dp"
         android:layout_height="35dp"
         android:background="@null"
         android:layout_alignBottom="@+id/list_1_12"
@@ -183,7 +183,7 @@
     <util.MyTableTextView1
         android:focusable="false"
         android:id="@+id/list_1_14"
-        android:layout_width="200dp"
+        android:layout_width="120dp"
         android:layout_height="35dp"
         android:background="@null"
         android:layout_alignBottom="@+id/list_1_13"
@@ -197,7 +197,7 @@
     <util.MyTableTextView1
         android:focusable="false"
         android:id="@+id/list_1_15"
-        android:layout_width="200dp"
+        android:layout_width="120dp"
         android:layout_height="35dp"
         android:background="@null"
         android:layout_alignBottom="@+id/list_1_14"

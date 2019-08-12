@@ -99,7 +99,7 @@
     <util.MyTableTextView1
         android:focusable="false"
         android:id="@+id/list_1_8"
-        android:layout_width="200dp"
+        android:layout_width="120dp"
         android:layout_height="35dp"
         android:background="@null"
         android:layout_alignBottom="@+id/list_1_7"
@@ -113,7 +113,7 @@
     <util.MyTableTextView1
         android:focusable="false"
         android:id="@+id/list_1_9"
-        android:layout_width="200dp"
+        android:layout_width="120dp"
         android:layout_height="35dp"
         android:background="@null"
         android:layout_alignBottom="@+id/list_1_8"

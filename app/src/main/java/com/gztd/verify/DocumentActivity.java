@@ -1,7 +1,6 @@
 package com.gztd.verify;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -65,7 +64,6 @@ public class DocumentActivity extends AppCompatActivity {
     private Handler handler_zhtm = new Handler();
     private String et_str_zhtm;
     private int num = 1;
-    private ProgressDialog dialog;
 
     private Runnable delayRun_zhtm = new Runnable() {
 
