@@ -25,6 +25,7 @@ import com.pedaily.yc.ycdialoglib.dialog.loading.ViewLoading;
 import com.pedaily.yc.ycdialoglib.fragment.CustomDialogFragment;
 import com.pedaily.yc.ycdialoglib.utils.DialogUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -42,13 +43,16 @@ public class SmallVerifyActivity extends AppCompatActivity {
     TextView tvCount;
     @BindView(R.id.tv_num)
     TextView tvNum;
+    @BindView(R.id.tv_quantity)
+    TextView tvQuantity;
     private EditText et_wlbq;// 物料标签框
     private Button bt_hd;// 核对按钮
     private Button bt_exit;// 退出按钮
     private ImageButton top_back;// 返回上一页按钮
     private String str1;
-    String num;
-    private String Code0,Code1,Code2,Code3,Code4;
+    String num,quantity;
+    private String mcInvCode, mcFree9, mcFree2, mcFree1;
+    private String Code0, Code1, cInvCode, iQuantity, iNum;
     private RelativeLayout rl_wlbq;// 物料标签
     private LinearLayout tb_wlbq;// 物料标签表体标题
     List<String> list = new ArrayList<>();
@@ -114,36 +118,73 @@ public class SmallVerifyActivity extends AppCompatActivity {
     }
 
     private void vision(RelativeLayout relativeLayout1) {
-            //判断不重复
-            if (!isRepeat()) {
-                MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
-                txt.setText(list.get(0));
-                txt.setFocusableInTouchMode(false);
-                txt = relativeLayout1.findViewById(R.id.list_1_2);
-                txt.setText(list.get(1));
-                txt.setFocusableInTouchMode(false);
-                txt = relativeLayout1.findViewById(R.id.list_1_3);
-                txt.setText(list.get(2));
-                txt.setFocusableInTouchMode(false);
-                txt = relativeLayout1.findViewById(R.id.list_1_4);
-                txt.setText(list.get(3));
-                txt.setFocusableInTouchMode(false);
-                num = list.get(2);
-                list1.add(list.get(0));
-                list.clear();
-//                checkMatch();
-                //扫码次数合计
-                tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));
-                //件数的累加
-                double n1 = Double.parseDouble(tvNum.getText().toString());
-                double n2 = Double.parseDouble(num);
-                double res = n1 + n2;
-                tvNum.setText(String.valueOf(res));
-            } else {
-                Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
-                relativeLayout1.removeAllViews();
-                list.clear();
-            }
+        //判断不重复
+//        if (!isRepeat()) {
+            MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
+            txt.setText(list.get(0));
+            txt.setFocusableInTouchMode(false);
+            mcInvCode = txt.getText().toString();
+            txt = relativeLayout1.findViewById(R.id.list_1_2);
+            txt.setText(list.get(1));
+            txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_3);
+            txt.setText(list.get(2));
+            txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_4);
+            txt.setText(list.get(3));
+            txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_5);
+            txt.setText(list.get(4));
+            txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_6);
+            txt.setText(list.get(5));
+            txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_7);
+            txt.setText(list.get(6));
+            txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_8);
+            txt.setText(list.get(7));
+            txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_9);
+            txt.setText(list.get(8));
+            txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_10);
+            txt.setText(list.get(9));
+            txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_11);
+            txt.setText(list.get(10));
+            txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_12);
+            txt.setText(list.get(11));
+            txt.setFocusableInTouchMode(false);
+            txt = relativeLayout1.findViewById(R.id.list_1_13);
+            txt.setText(list.get(12));
+            txt.setFocusableInTouchMode(false);
+            quantity = list.get(1);
+            num = list.get(2);
+            list1.add(list.get(0));
+            list.clear();
+            //扫码次数合计
+            tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));
+
+            //件数的累加
+            double n1 = Double.parseDouble(tvNum.getText().toString());
+            double n2 = Double.parseDouble(num);
+            double res = n1 + n2;
+            DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+            tvNum.setText(String.valueOf(decimalFormat.format(res)));
+
+            //数量的累加
+            double n3 = Double.parseDouble(tvQuantity.getText().toString());
+            double n4 = Double.parseDouble(quantity);
+            double res1 = n3 + n4;
+            DecimalFormat decimalFormat1 = new DecimalFormat("###################.###########");
+            tvQuantity.setText(String.valueOf(decimalFormat1.format(res1)));
+//        } else {
+//            Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
+//            relativeLayout1.removeAllViews();
+//            list.clear();
+//        }
     }
 
     //判断是否有重复
@@ -168,8 +209,8 @@ public class SmallVerifyActivity extends AppCompatActivity {
         DialogUtils.requestMsgPermission(this);//自定义样式调用
 
         //这里判断是否匹配
-        if (str1!=null){
-            if (str1.equals(Code0)) {
+        if (str1 != null) {
+            if (mcInvCode.equals(cInvCode) && tvNum.getText().toString().equals(iNum) && tvQuantity.getText().toString().equals(iQuantity)) {
                 CustomDialogFragment
                         .create(getSupportFragmentManager())
                         .setTitle("系统提示：")
@@ -190,11 +231,11 @@ public class SmallVerifyActivity extends AppCompatActivity {
                         .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
                         .show();
             }
-            }else {
+        } else {
             Toast.makeText(mContext, "你还没有扫码", Toast.LENGTH_SHORT).show();
         }
-        
-        
+
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -255,10 +296,9 @@ public class SmallVerifyActivity extends AppCompatActivity {
         tableview_wlbq();
         Intent intent3 = getIntent();
         etXh.setText(intent3.getStringExtra("Code0"));
-        Code1 = intent3.getStringExtra("Code1");//唯一编号
-        Code2 = intent3.getStringExtra("Code2");//代号
-        Code3 = intent3.getStringExtra("Code3");//重量
-        Code4 = intent3.getStringExtra("Code4");//件数
+        cInvCode = intent3.getStringExtra("cInvCode");//代号
+        iQuantity = intent3.getStringExtra("iQuantity");//重量
+        iNum = intent3.getStringExtra("iNum");//件数
     }
 
     //返回扫码数据的方法
