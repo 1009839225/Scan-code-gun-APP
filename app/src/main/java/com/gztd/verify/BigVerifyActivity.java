@@ -72,7 +72,7 @@ public class BigVerifyActivity extends AppCompatActivity {
     private Handler handler_zhtm = new Handler();
     private String et_str_zhtm;
     private String cInvCode, cinvname, cEngineerFigNo, cFree9, iQuantity, iNum, cFree2, cFree1;
-    private String mcInvCode, mcFree9, mcFree2, mcFree1;
+    private String mcInvCode, mcFree9, mcFree2, mcFree1 , mcinvname ,mcEngineerFigNo;
 
     private Runnable delayRun_zhtm = new Runnable() {
 
@@ -153,7 +153,12 @@ public class BigVerifyActivity extends AppCompatActivity {
         //这里判断是否匹配
         //如果代号和材料编号都与前面匹配了，就核对数量和件数
         if (str1 != null) {
-            if (mcInvCode.equals(cInvCode) && mcFree1.equals(cFree1) && tvNum.getText().toString().equals(iNum) && tvQuantity.getText().toString().equals(iQuantity)) {
+            if (mcInvCode.equals(cInvCode) &&
+                    mcFree1.equals(cFree1) &&
+                    tvNum.getText().toString().equals(iNum) &&
+                    tvQuantity.getText().toString().equals(iQuantity) &&
+                    mcFree2.equals(cFree2) &&
+                    mcFree9.equals(cFree9)) {
                 CustomDialogFragment
                         .create(getSupportFragmentManager())
                         .setTitle("系统提示：")
@@ -224,14 +229,14 @@ public class BigVerifyActivity extends AppCompatActivity {
             txt = relativeLayout1.findViewById(R.id.list_1_7);
             txt.setText(list.get(5));
             txt.setFocusableInTouchMode(false);
-            intent3.putExtra("Code6", txt.getText().toString());
+            intent3.putExtra("cFree2", txt.getText().toString());
+            mcFree2 = txt.getText().toString();
 
 
             txt = relativeLayout1.findViewById(R.id.list_1_8);
             txt.setText(list.get(6));
             txt.setFocusableInTouchMode(false);
-            intent3.putExtra("cFree2", txt.getText().toString());
-            mcFree2 = txt.getText().toString();
+            intent3.putExtra("Code3", txt.getText().toString());
 
             txt = relativeLayout1.findViewById(R.id.list_1_9);
             txt.setText(list.get(7));
@@ -261,13 +266,13 @@ public class BigVerifyActivity extends AppCompatActivity {
             txt = relativeLayout1.findViewById(R.id.list_1_14);
             txt.setText(list.get(12));
             txt.setFocusableInTouchMode(false);
-            intent3.putExtra("Code4", txt.getText().toString());
+            intent3.putExtra("cFree9", txt.getText().toString());
+            mcFree9 = txt.getText().toString();
 
             txt = relativeLayout1.findViewById(R.id.list_1_15);
             txt.setText(list.get(13));
             txt.setFocusableInTouchMode(false);
-            intent3.putExtra("cFree9", txt.getText().toString());
-            mcFree9 = txt.getText().toString();
+            intent3.putExtra("Code4", txt.getText().toString());
 
             quantity = list.get(2);
             num = list.get(3);

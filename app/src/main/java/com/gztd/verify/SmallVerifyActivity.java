@@ -52,7 +52,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
     private String str1;
     String num,quantity;
     private String mcInvCode, mcFree9, mcFree2, mcFree1;
-    private String Code0, Code1, cInvCode, iQuantity, iNum;
+    private String Code0, Code1, cInvCode, iQuantity, iNum ,cFree2 ,cFree1 ,cFree9;
     private RelativeLayout rl_wlbq;// 物料标签
     private LinearLayout tb_wlbq;// 物料标签表体标题
     List<String> list = new ArrayList<>();
@@ -124,42 +124,58 @@ public class SmallVerifyActivity extends AppCompatActivity {
             txt.setText(list.get(0));
             txt.setFocusableInTouchMode(false);
             mcInvCode = txt.getText().toString();
+
             txt = relativeLayout1.findViewById(R.id.list_1_2);
             txt.setText(list.get(1));
             txt.setFocusableInTouchMode(false);
+
             txt = relativeLayout1.findViewById(R.id.list_1_3);
             txt.setText(list.get(2));
             txt.setFocusableInTouchMode(false);
+
             txt = relativeLayout1.findViewById(R.id.list_1_4);
             txt.setText(list.get(3));
             txt.setFocusableInTouchMode(false);
+            mcFree1 = txt.getText().toString();
+
             txt = relativeLayout1.findViewById(R.id.list_1_5);
             txt.setText(list.get(4));
             txt.setFocusableInTouchMode(false);
+            mcFree2 = txt.getText().toString();
+
             txt = relativeLayout1.findViewById(R.id.list_1_6);
             txt.setText(list.get(5));
             txt.setFocusableInTouchMode(false);
+
             txt = relativeLayout1.findViewById(R.id.list_1_7);
             txt.setText(list.get(6));
             txt.setFocusableInTouchMode(false);
+
             txt = relativeLayout1.findViewById(R.id.list_1_8);
             txt.setText(list.get(7));
             txt.setFocusableInTouchMode(false);
+
             txt = relativeLayout1.findViewById(R.id.list_1_9);
             txt.setText(list.get(8));
             txt.setFocusableInTouchMode(false);
+
             txt = relativeLayout1.findViewById(R.id.list_1_10);
             txt.setText(list.get(9));
             txt.setFocusableInTouchMode(false);
+
             txt = relativeLayout1.findViewById(R.id.list_1_11);
             txt.setText(list.get(10));
             txt.setFocusableInTouchMode(false);
+
             txt = relativeLayout1.findViewById(R.id.list_1_12);
             txt.setText(list.get(11));
             txt.setFocusableInTouchMode(false);
+            mcFree9 = txt.getText().toString();
+
             txt = relativeLayout1.findViewById(R.id.list_1_13);
             txt.setText(list.get(12));
             txt.setFocusableInTouchMode(false);
+
             quantity = list.get(1);
             num = list.get(2);
             list1.add(list.get(0));
@@ -210,7 +226,12 @@ public class SmallVerifyActivity extends AppCompatActivity {
 
         //这里判断是否匹配
         if (str1 != null) {
-            if (mcInvCode.equals(cInvCode) && tvNum.getText().toString().equals(iNum) && tvQuantity.getText().toString().equals(iQuantity)) {
+            if (mcInvCode.equals(cInvCode) &&
+                    mcFree1.equals(cFree1) &&
+                    tvNum.getText().toString().equals(iNum) &&
+                    tvQuantity.getText().toString().equals(iQuantity) &&
+                    mcFree2.equals(cFree2) &&
+                    mcFree9.equals(cFree9)) {
                 CustomDialogFragment
                         .create(getSupportFragmentManager())
                         .setTitle("系统提示：")
@@ -299,6 +320,9 @@ public class SmallVerifyActivity extends AppCompatActivity {
         cInvCode = intent3.getStringExtra("cInvCode");//代号
         iQuantity = intent3.getStringExtra("iQuantity");//重量
         iNum = intent3.getStringExtra("iNum");//件数
+        cFree2 = intent3.getStringExtra("cFree2");//带材批号
+        cFree1 = intent3.getStringExtra("cFree1");//材料编号
+        cFree9 = intent3.getStringExtra("cFree9");//生产批号
     }
 
     //返回扫码数据的方法
