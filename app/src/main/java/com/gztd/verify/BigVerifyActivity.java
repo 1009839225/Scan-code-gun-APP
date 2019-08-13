@@ -313,24 +313,24 @@ public class BigVerifyActivity extends AppCompatActivity {
             }
             return false;
         });
-        bt_jx.setOnClickListener(v -> {
-            Intent intent = new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
-            finish();
-            startActivity(intent);
-        });
-
-        bt_jx.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                bt_jx.setBackgroundResource(R.drawable.button_pressed);
-            } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                bt_jx.setBackgroundResource(R.drawable.blue_button);
-            }
-            return false;
-        });
+//        bt_jx.setOnClickListener(v -> {
+//            Intent intent = new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
+//            finish();
+//            startActivity(intent);
+//        });
+//
+//        bt_jx.setOnTouchListener((v, event) -> {
+//            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                bt_jx.setBackgroundResource(R.drawable.button_pressed);
+//            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+//                bt_jx.setBackgroundResource(R.drawable.blue_button);
+//            }
+//            return false;
+//        });
 
         top_back.setOnClickListener(v -> finish());
 
-        // 纸盒条码的扫描监听
+        // 入库单号的扫描监听
         etRkdh.addTextChangedListener(new TextWatcher() {
 
             @Override
