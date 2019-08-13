@@ -1,11 +1,11 @@
 package util;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SharedHelper {
     private Context mContext;
@@ -32,7 +32,7 @@ public class SharedHelper {
 
     // 读取
     public Map<String, String> read() {
-        Map<String, String> data = new HashMap<String, String>();
+        Map<String, String> data = new HashMap<>();
         SharedPreferences sp = mContext.getSharedPreferences("mysp1",
                 Context.MODE_PRIVATE);
         data.put("strname", sp.getString("strname", ""));//读取用户名
@@ -53,7 +53,7 @@ public class SharedHelper {
 
     // 读取2
     public Map<String, String> read2() {
-        Map<String, String> data = new HashMap<String, String>();
+        Map<String, String> data = new HashMap<>();
         SharedPreferences sp = mContext.getSharedPreferences("mysp2",
                 Context.MODE_PRIVATE);
 

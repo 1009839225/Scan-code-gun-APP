@@ -70,17 +70,17 @@ public class LoginActiviy extends Activity {
         bt_login.setOnClickListener(v -> {
             strname = a_ed_name.getText().toString();
             strpasswd = a_ed_pw.getText().toString();
-            pname = a_ed_cd.getText().toString();
+//            pname = a_ed_cd.getText().toString();
             SharedPreferences sp = mContext.getSharedPreferences("mysp2", Context.MODE_PRIVATE);
             String AccNum = sp.getString("userwb", "");
 
-            String Addressurl = "http://" + AccNum + "/WebService_T_YM.asmx";
+            String Addressurl = "http://" + AccNum + "/WebService1.asmx";
             //  Log.e("11", "22222");
             // pname=a_ed_cd.getText().toString();
             String f = null;
             try {
 
-                f = Loginconnect.getland(strname, strpasswd, pname, Addressurl);
+                f = Loginconnect.getland(strname, strpasswd, Addressurl);
 
 
             } catch (Exception e) {

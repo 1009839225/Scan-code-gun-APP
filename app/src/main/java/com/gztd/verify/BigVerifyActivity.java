@@ -63,13 +63,13 @@ public class BigVerifyActivity extends AppCompatActivity {
     private String num;
     private int number = 1;
     private String str1;
-    private String Quantity;
     private String[] name_zhtm = {"行号", "唯一编号", "代号", "重量", "件数", "自由项1", "自由项2", "自由项3", "自由项4",
             "自由项5", "自由项6", "自由项7", "自由项8", "自由项9", "自由项10"};
 
     private Handler handler_zhtm = new Handler();
     private String et_str_zhtm;
-    private String Code1;
+    private String cInvCode, cinvname,cEngineerFigNo,cFree9,iQuantity,iNum,cFree2,cFree1;
+    private String mcInvCode,mcFree9,mcFree2,mcFree1;
 
     private Runnable delayRun_zhtm = new Runnable() {
 
@@ -147,12 +147,11 @@ public class BigVerifyActivity extends AppCompatActivity {
 
     private void checkMatch() {
         DialogUtils.requestMsgPermission(this);//自定义样式调用
-
         //这里判断是否匹配
-        //如果代号匹配了
+        //如果代号和材料编号都与前面匹配了，就核对数量和件数
         if (str1!=null){
-            if (str1.equals(Code1)) {
-                if (Quantity.equals(tvNum.getText())) {
+            if (mcInvCode.equals(cInvCode) &&  mcFree1.equals(cFree1)) {
+                if (iQuantity.equals(tvNum.getText().toString())) {
                     CustomDialogFragment
                             .create(getSupportFragmentManager())
                             .setTitle("系统提示：")
@@ -198,12 +197,14 @@ public class BigVerifyActivity extends AppCompatActivity {
                 txt = relativeLayout1.findViewById(R.id.list_1_2);
                 txt.setText(list.get(0));
                 txt.setFocusableInTouchMode(false);
-                intent3.putExtra("Code1", txt.getText().toString());//唯一编号
+                intent3.putExtra("cInvCode", txt.getText().toString());//唯一编号
+
 
                 txt = relativeLayout1.findViewById(R.id.list_1_3);
                 txt.setText(list.get(1));
                 txt.setFocusableInTouchMode(false);
-                intent3.putExtra("Code2", txt.getText().toString());//代号
+                intent3.putExtra("cInvCode", txt.getText().toString());//代号
+                mcInvCode = txt.getText().toString();
 
                 txt = relativeLayout1.findViewById(R.id.list_1_4);
                 txt.setText(list.get(2));
@@ -214,6 +215,61 @@ public class BigVerifyActivity extends AppCompatActivity {
                 txt.setText(list.get(3));
                 txt.setFocusableInTouchMode(false);
                 intent3.putExtra("Code4", txt.getText().toString());//件数
+
+                txt = relativeLayout1.findViewById(R.id.list_1_6);
+                txt.setText(list.get(4));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("cFree1", txt.getText().toString());//件数
+                mcFree1 = txt.getText().toString();
+
+                txt = relativeLayout1.findViewById(R.id.list_1_7);
+                txt.setText(list.get(5));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code6", txt.getText().toString());
+
+
+                txt = relativeLayout1.findViewById(R.id.list_1_8);
+                txt.setText(list.get(6));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("cFree2", txt.getText().toString());
+                mcFree2 = txt.getText().toString();
+
+                txt = relativeLayout1.findViewById(R.id.list_1_9);
+                txt.setText(list.get(7));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code4", txt.getText().toString());//件数
+
+                txt = relativeLayout1.findViewById(R.id.list_1_10);
+                txt.setText(list.get(8));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code4", txt.getText().toString());//件数
+
+                txt = relativeLayout1.findViewById(R.id.list_1_11);
+                txt.setText(list.get(9));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code4", txt.getText().toString());//件数
+
+                txt = relativeLayout1.findViewById(R.id.list_1_12);
+                txt.setText(list.get(10));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code4", txt.getText().toString());//件数
+
+                txt = relativeLayout1.findViewById(R.id.list_1_13);
+                txt.setText(list.get(11));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code4", txt.getText().toString());//件数
+
+                txt = relativeLayout1.findViewById(R.id.list_1_14);
+                txt.setText(list.get(12));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code4", txt.getText().toString());//件数
+
+                txt = relativeLayout1.findViewById(R.id.list_1_15);
+                txt.setText(list.get(13));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("cFree9", txt.getText().toString());
+                mcFree9 = txt.getText().toString();
+
 
                 num = list.get(3);
                 list1.add(list.get(0));
@@ -289,14 +345,15 @@ public class BigVerifyActivity extends AppCompatActivity {
         //Intent传值存储单据界面传过来的数据
         Intent intent2 = getIntent();
         etCkbm.setText(intent2.getStringExtra("Code0"));//行号
-        Code1 = intent2.getStringExtra("Code1");//代号
-        String Code2 = intent2.getStringExtra("Code2");//牌号
-        String Code3 = intent2.getStringExtra("Code3");//图号
-        String Code4 = intent2.getStringExtra("Code4");//生产批号
-        String Code5 = intent2.getStringExtra("Code5");//数量
-        Quantity = intent2.getStringExtra("Quantity");//件数
-        String Code7 = intent2.getStringExtra("Code7");//带材批号
-        String Code8 = intent2.getStringExtra("Code8");//材料编号
+        cInvCode = intent2.getStringExtra("cInvCode");//代号
+        cinvname = intent2.getStringExtra("cinvname");//牌号
+        cEngineerFigNo = intent2.getStringExtra("cEngineerFigNo");//图号
+        cFree9 = intent2.getStringExtra("cFree9");//生产批号
+        iQuantity = intent2.getStringExtra("iQuantity");//数量
+        iNum = intent2.getStringExtra("iNum");//件数
+        cFree2 = intent2.getStringExtra("cFree2");//带材批号
+        cFree1 = intent2.getStringExtra("cFree1");//材料编号
+
     }
 
     //正则表达式判断字符输入合法性

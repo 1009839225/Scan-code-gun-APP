@@ -1,18 +1,18 @@
 package util;
 
+import android.util.Log;
+
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import android.util.Log;
-
-public class GetTable_ST_ProductReceive {
+public class GetTable_RdRecord01 {
     private static final String AddressnameSpace = "http://tongchang.org/";
     // private static final String Addressurl =
     // "http://192.168.1.164:8585/WebService1.asmx";
-    private static final String Addressmethod = "GetTable_ProductReceive";
-    private static final String AddresssoapAction = "http://tongchang.org/GetTable_ProductReceive";
+    private static final String Addressmethod = "GetTable_RdRecord01";
+    private static final String AddresssoapAction = "http://tongchang.org/GetTable_RdRecord01";
 
     // 连接服务器
     public static String getland(String edit, String Addressurl)

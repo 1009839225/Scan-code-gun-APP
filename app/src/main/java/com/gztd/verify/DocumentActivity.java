@@ -34,7 +34,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import util.GetTable_ST_ProductReceive;
+import util.GetTable_RdRecord01;
 import util.MyTableTextView1;
 
 public class DocumentActivity extends AppCompatActivity {
@@ -103,8 +103,8 @@ public class DocumentActivity extends AppCompatActivity {
                 Log.e("2", "2");
                 SharedPreferences sp = mContext.getSharedPreferences("mysp2", Context.MODE_PRIVATE);
                 String AccNum = sp.getString("userwb", "");
-                String Addressurl = "http://" + AccNum + "/WebService_T_YM.asmx";
-                beforeresult = GetTable_ST_ProductReceive.getland(params[0], Addressurl);
+                String Addressurl = "http://" + AccNum + "/WebService1.asmx";
+                beforeresult = GetTable_RdRecord01.getland(params[0], Addressurl);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -114,18 +114,13 @@ public class DocumentActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-//            if (!isLegal(et_str_zhtm)) {
-//                //结束loading
-//                ViewLoading.dismiss(mContext);
-//                Toast.makeText(DocumentActivity.this, "无效数据，请重试", Toast.LENGTH_SHORT).show();
-//                et_zhtm.setText("");
-//            } else {
             ViewLoading.dismiss(mContext);
             try {
                 JSONObject info1 = new JSONObject(result);
-                String main = info1.getString("Main");// 表体
+                String main = info1.getString("Main");// 表头
                 String details = info1.getString("Details");// 表体
                 JSONArray jsonArray = new JSONArray(main);
+//                JSONArray jsonArray1 = new JSONArray(details);
                 if (jsonArray.length() != 0) {
                     indata(main,details);
                 } else {
@@ -145,42 +140,41 @@ public class DocumentActivity extends AppCompatActivity {
         //表头数据
         JSONArray jsonArray1 = new JSONArray(main);
         JSONObject json = jsonArray1.getJSONObject(0);
+        //表体数据
+        JSONArray jsonArray = new JSONArray(details);
+        JSONObject info = jsonArray.getJSONObject(0);
         //etCkbm如果为空，就是第一次扫码，不需要判断
         if (etCkbm.getText().toString().equals("")) {
             etDjtm.setText("");
-            etDjtm.setHint(json.getString("SourceVoucherCode"));
-            etCkbm.setText(json.getString("SourceVoucherCode"));
-            etGfbm.setText(json.getString("SourceVoucherCode"));
-            //表体数据
-            JSONArray jsonArray = new JSONArray(details);
-            final JSONObject info = jsonArray.getJSONObject(0);
-            RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_djtm, null);
+            etDjtm.setHint(json.getString("cCode"));//单据号
+            etCkbm.setText(json.getString("cWhCode"));//仓库编码
+            etGfbm.setText(json.getString("cVenCode"));//供方编码
+
+            RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.table_djtm, null);
             vision(info, relativeLayout2);
             tb_zhtm.addView(relativeLayout2);
-            list.add(json.getString("SourceVoucherCode"));
+            list.add(json.getString("cCode"));//单据号
             list1.add(list.get(0));
             list.clear();
         }else {
 
-            list.add(json.getString("SourceVoucherCode"));
+            list.add(json.getString("cCode"));
             if (isRepeat()){
                 Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
                 etDjtm.setText("");
                 list.clear();
             } else {
                 tb_zhtm.removeAllViews();
+                num=1;
                 tableview_zhtm();
                 etDjtm.setText("");
-                etDjtm.setHint(json.getString("SourceVoucherCode"));
-                etCkbm.setText(json.getString("SourceVoucherCode"));
-                etGfbm.setText(json.getString("SourceVoucherCode"));
-                //表体数据
-                JSONArray jsonArray = new JSONArray(details);
-                final JSONObject info = jsonArray.getJSONObject(0);
+                etDjtm.setHint(json.getString("cCode"));//单据号
+                etCkbm.setText(json.getString("cWhCode"));//仓库编码
+                etGfbm.setText(json.getString("cVenCode"));//供方编码
                 RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_djtm, null);
                 vision(info, relativeLayout2);
                 tb_zhtm.addView(relativeLayout2);
-                list.add(json.getString("SourceVoucherCode"));
+                list.add(json.getString("cCode"));//单据号
                 list1.add(list.get(0));
                 list.clear();
             }
@@ -197,14 +191,14 @@ public class DocumentActivity extends AppCompatActivity {
                 try {
                     //将获取到的8个表体数据以及行号传过去
                     intent2.putExtra("Code0", finalTxt.getText().toString());//行号
-                    intent2.putExtra("Code1", info.getString("Code"));//代号
-                    intent2.putExtra("Code2", info.getString("Code"));//牌号
-                    intent2.putExtra("Code3", info.getString("Code"));//图号
-                    intent2.putExtra("Code4", info.getString("Code"));//生产批号
-                    intent2.putExtra("Code5", info.getString("Code"));//数量
-                    intent2.putExtra("Quantity", info.getString("Quantity"));//件数
-                    intent2.putExtra("Code7", info.getString("Code"));//带材批号
-                    intent2.putExtra("Code8", info.getString("Code"));//材料编号
+                    intent2.putExtra("cInvCode", info.getString("cInvCode"));//代号
+                    intent2.putExtra("cinvname", info.getString("cinvname"));//牌号
+                    intent2.putExtra("cEngineerFigNo", info.getString("cEngineerFigNo"));//图号
+                    intent2.putExtra("cFree9", info.getString("cFree9"));//生产批号
+                    intent2.putExtra("iQuantity", info.getString("iQuantity"));//数量
+                    intent2.putExtra("iNum", info.getString("iNum"));//件数
+                    intent2.putExtra("cFree2", info.getString("cFree2"));//带材批号
+                    intent2.putExtra("cFree1", info.getString("cFree1"));//材料编号
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -213,33 +207,36 @@ public class DocumentActivity extends AppCompatActivity {
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_2);
-            txt1.setText(info.getString("Code"));
+            txt1.setText(info.getString("cInvCode"));
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_3);
-            txt1.setText(info.getString("Code"));
+            txt1.setText(info.getString("cinvname"));
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_4);
-            txt1.setText(info.getString("Code"));
+            txt1.setText(info.getString("cEngineerFigNo"));
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_5);
-            txt1.setText(info.getString("Code"));
+            txt1.setText(info.getString("cFree9"));
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_6);
-            txt1.setText(info.getString("Quantity"));
+            txt1.setText(info.getString("iQuantity"));
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_7);
-            txt1.setText(info.getString("Quantity"));
+            txt1.setText(info.getString("iNum"));
             txt1.setFocusableInTouchMode(false);
 
             txt1 = relativeLayout2.findViewById(R.id.list_1_8);
-            txt1.setText(info.getString("Code"));
+            txt1.setText(info.getString("cFree2"));
             txt1.setFocusableInTouchMode(false);
 
+            txt1 = relativeLayout2.findViewById(R.id.list_1_9);
+            txt1.setText(info.getString("cFree1"));
+            txt1.setFocusableInTouchMode(false);
     }
 
     @SuppressLint("ClickableViewAccessibility")
