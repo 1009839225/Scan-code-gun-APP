@@ -151,7 +151,6 @@ public class BigVerifyActivity extends AppCompatActivity {
     private void checkMatch() {
         DialogUtils.requestMsgPermission(mContext);//自定义样式调用
         //这里判断是否匹配
-        //如果代号和材料编号都与前面匹配了，就核对数量和件数
         if (str1 != null) {
             if (mcInvCode.equals(cInvCode) &&
                     mcFree1.equals(cFree1) &&
@@ -367,7 +366,7 @@ public class BigVerifyActivity extends AppCompatActivity {
 
     }
 
-    //正则表达式判断字符输入合法性
+    //正则判断字符输入合法性
     public static boolean isLegal(String content) {
         Pattern pattern = Pattern.compile("\\^");
         Matcher matcher = pattern.matcher(content);

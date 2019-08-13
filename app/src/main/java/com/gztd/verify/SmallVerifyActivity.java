@@ -214,7 +214,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
         return r;
     }
 
-    //正则表达式判断字符输入合法性
+    //正则判断字符输入合法性
     public static boolean isLegal(String content) {
         Pattern pattern = Pattern.compile("\\^");
         Matcher matcher = pattern.matcher(content);
