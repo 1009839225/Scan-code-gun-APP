@@ -48,16 +48,13 @@ public class SmallVerifyActivity extends AppCompatActivity {
     private EditText et_wlbq;// 物料标签框
     private Button bt_hd;// 核对按钮
     private Button bt_exit;// 退出按钮
-    private ImageButton top_back;// 返回上一页按钮
     private String str1;
     String num,quantity;
     private String mcInvCode, mcFree9, mcFree2, mcFree1;
     private String Code0, Code1, cInvCode, iQuantity, iNum ,cFree2 ,cFree1 ,cFree9;
-    private RelativeLayout rl_wlbq;// 物料标签
     private LinearLayout tb_wlbq;// 物料标签表体标题
     List<String> list = new ArrayList<>();
     List<String> list1 = new ArrayList<>();
-    private RelativeLayout relativeLayout1;
     private Context mContext;
     private String[] name_wlbq = {"代号", "重量", "件数", "自由项1", "自由项2", "自由项3", "自由项4",
             "自由项5", "自由项6", "自由项7", "自由项8", "自由项9", "自由项10"};
@@ -180,6 +177,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
             num = list.get(2);
             list1.add(list.get(0));
             list.clear();
+            
             //扫码次数合计
             tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));
 
@@ -222,7 +220,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
     }
 
     private void checkMatch() {
-        DialogUtils.requestMsgPermission(this);//自定义样式调用
+        DialogUtils.requestMsgPermission(this);//自定义弹窗调用
 
         //这里判断是否匹配
         if (str1 != null) {
@@ -290,7 +288,8 @@ public class SmallVerifyActivity extends AppCompatActivity {
             return false;
         });
 
-        top_back = findViewById(R.id.top_back);
+        // 返回上一页按钮
+        ImageButton top_back = findViewById(R.id.top_back);
         top_back.setOnClickListener(v -> finish());
 
         // 物料标签的扫描监听
@@ -316,7 +315,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
 
         tableview_wlbq();
         Intent intent3 = getIntent();
-        etXh.setText(intent3.getStringExtra("Code0"));
+        etXh.setText(intent3.getStringExtra("Code0"));//行号
         cInvCode = intent3.getStringExtra("cInvCode");//代号
         iQuantity = intent3.getStringExtra("iQuantity");//重量
         iNum = intent3.getStringExtra("iNum");//件数
@@ -336,14 +335,15 @@ public class SmallVerifyActivity extends AppCompatActivity {
         et_wlbq.setText("");
         str1 = list.get(0);
         et_wlbq.setHint(str1);
-        relativeLayout1 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_wlbq, null);
+        RelativeLayout relativeLayout1 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_wlbq, null);
         vision(relativeLayout1);
         tb_wlbq.addView(relativeLayout1);
     }
 
     // 物料标签表体标题显示
     private void tableview_wlbq() {
-        rl_wlbq = (RelativeLayout) LayoutInflater.from(this).inflate(
+        // 物料标签
+        RelativeLayout rl_wlbq = (RelativeLayout) LayoutInflater.from(this).inflate(
                 R.layout.table_wlbq, null);
         MyTableTextView1 title = rl_wlbq
                 .findViewById(R.id.list_1_1);
