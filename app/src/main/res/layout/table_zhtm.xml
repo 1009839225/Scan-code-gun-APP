@@ -69,6 +69,7 @@
         android:layout_toEndOf="@+id/list_1_4" />
 
     <util.MyTableTextView1
+        android:visibility="gone"
         android:focusable="false"
         android:id="@+id/list_1_6"
         android:layout_width="120dp"
@@ -97,6 +98,7 @@
         android:layout_toEndOf="@+id/list_1_6" />
 
     <util.MyTableTextView1
+        android:visibility="gone"
         android:focusable="false"
         android:id="@+id/list_1_8"
         android:layout_width="120dp"
@@ -111,6 +113,7 @@
         android:layout_toEndOf="@+id/list_1_7" />
 
     <util.MyTableTextView1
+        android:visibility="gone"
         android:focusable="false"
         android:id="@+id/list_1_9"
         android:layout_width="120dp"
@@ -125,6 +128,7 @@
         android:layout_toEndOf="@+id/list_1_8" />
 
     <util.MyTableTextView1
+        android:visibility="gone"
         android:focusable="false"
         android:id="@+id/list_1_10"
         android:layout_width="120dp"
@@ -139,6 +143,7 @@
         android:layout_toEndOf="@+id/list_1_9" />
 
     <util.MyTableTextView1
+        android:visibility="gone"
         android:focusable="false"
         android:id="@+id/list_1_11"
         android:layout_width="120dp"
@@ -153,6 +158,7 @@
         android:layout_toEndOf="@+id/list_1_10" />
 
     <util.MyTableTextView1
+        android:visibility="gone"
         android:focusable="false"
         android:id="@+id/list_1_12"
         android:layout_width="120dp"
@@ -167,6 +173,7 @@
         android:layout_toEndOf="@+id/list_1_11" />
 
     <util.MyTableTextView1
+        android:visibility="gone"
         android:focusable="false"
         android:id="@+id/list_1_13"
         android:layout_width="120dp"
@@ -195,6 +202,7 @@
         android:layout_toEndOf="@+id/list_1_13" />
 
     <util.MyTableTextView1
+        android:visibility="gone"
         android:focusable="false"
         android:id="@+id/list_1_15"
         android:layout_width="120dp"

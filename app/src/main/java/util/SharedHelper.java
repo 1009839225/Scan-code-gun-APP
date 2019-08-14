@@ -27,7 +27,7 @@ public class SharedHelper {
         editor.putString("strpasswd", strpasswd);//密码
         editor.putString("pname", pname);//账套
 
-        editor.commit();
+        editor.apply();
     }
 
     // 读取

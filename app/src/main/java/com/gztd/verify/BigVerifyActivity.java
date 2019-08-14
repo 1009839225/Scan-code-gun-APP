@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import com.pedaily.yc.ycdialoglib.utils.DialogUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -66,8 +68,8 @@ public class BigVerifyActivity extends AppCompatActivity {
     private String num,quantity;
     private int number = 1;
     private String str1;
-    private String[] name_zhtm = {"行号", "唯一编号", "代号", "重量", "件数", "自由项1", "自由项2", "自由项3", "自由项4",
-            "自由项5", "自由项6", "自由项7", "自由项8", "自由项9", "自由项10"};
+    private String[] name_zhtm = {"行号", "唯一编号", "代号", "重量", "件数", "自由项1", "带材批号", "自由项3", "自由项4",
+            "自由项5", "自由项6", "自由项7", "自由项8", "生产批号", "自由项10"};
 
     private Handler handler_zhtm = new Handler();
     private String et_str_zhtm;
@@ -131,10 +133,17 @@ public class BigVerifyActivity extends AppCompatActivity {
         String str = etRkdh.getText().toString();
 
         StringTokenizer st = new StringTokenizer(str, "\\^");
-        while (st.hasMoreTokens()) {
-            list.add(st.nextToken());
-        }
-
+//        while (st.hasMoreTokens()) {
+//            String st1 = st.nextToken();
+//            if (st1.equals("")){
+//                list.add("");
+//            }else {
+//                list.add(st1);
+//            }
+//
+//        }
+        String[] split = str.split("\\^");
+        list.addAll(Arrays.asList(split));
 //	    if (list.size() == 9) {
         etRkdh.setText("");
         str1 = list.get(0);
@@ -153,7 +162,7 @@ public class BigVerifyActivity extends AppCompatActivity {
         //这里判断是否匹配
         if (str1 != null) {
             if (mcInvCode.equals(cInvCode) &&
-                    mcFree1.equals(cFree1) &&
+//                    mcFree1.equals(cFree1) &&
                     tvNum.getText().toString().equals(iNum) &&
                     tvQuantity.getText().toString().equals(iQuantity) &&
                     mcFree2.equals(cFree2) &&
@@ -371,6 +380,15 @@ public class BigVerifyActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile("\\^");
         Matcher matcher = pattern.matcher(content);
         return matcher.find();
+    }
+
+    //转格式方法
+    private static <E>  List<E> transferArrayToList(E[] array){
+        List<E> transferedList = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Arrays.stream(array).forEach(arr -> transferedList.add(arr));
+        }
+        return transferedList;
     }
 
     //判断是否有重复
