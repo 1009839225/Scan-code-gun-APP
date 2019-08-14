@@ -110,7 +110,7 @@ public class SmallVerifyActivity extends Activity {
     private void init() {
         et_wlbq = findViewById(R.id.et_wlbq);
         tb_wlbq = findViewById(R.id.tb_wlbq);
-        bt_hd = findViewById(R.id.bt_hd);
+        bt_hd = findViewById(R.id.bt_ok);
         bt_hd.setOnClickListener(v -> {
             // TODO 核对
             Toast.makeText(SmallVerifyActivity.this, "此处要核对，功能建设中...", Toast.LENGTH_SHORT).show();

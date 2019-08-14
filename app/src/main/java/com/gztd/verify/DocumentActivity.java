@@ -44,8 +44,8 @@ public class DocumentActivity extends AppCompatActivity {
 
     @BindView(R.id.tb_zhtm)
     LinearLayout tb_zhtm;
-    @BindView(R.id.bt_hd)
-    Button bt_hd;
+    @BindView(R.id.bt_ok)
+    Button bt_ok;
     @BindView(R.id.bt_jx)
     Button bt_jx;
     @BindView(R.id.et_djtm)
@@ -70,8 +70,8 @@ public class DocumentActivity extends AppCompatActivity {
         @Override
         public void run() {
             if (et_str_zhtm.length() > 0) {
-                // TODO 调用服务器接口
-                load();
+//                // TODO 调用服务器接口
+//                load();
             } else {
                 handler_zhtm.removeCallbacks(delayRun_zhtm);
             }
@@ -142,41 +142,151 @@ public class DocumentActivity extends AppCompatActivity {
         JSONObject json = jsonArray1.getJSONObject(0);
         //表体数据
         JSONArray jsonArray = new JSONArray(details);
-        JSONObject info = jsonArray.getJSONObject(0);
-        //etCkbm如果为空，就是第一次扫码，不需要判断
-        if (etCkbm.getText().toString().equals("")) {
-            etDjtm.setText("");
-            etDjtm.setHint(json.getString("cCode"));//单据号
-            etCkbm.setText(json.getString("cWhCode"));//仓库编码
-            etGfbm.setText(json.getString("cVenCode"));//供方编码
-
-            RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.table_djtm, null);
-            vision(info, relativeLayout2);
-            tb_zhtm.addView(relativeLayout2);
-            list.add(json.getString("cCode"));//单据号
-            list1.add(list.get(0));
-            list.clear();
-        }else {
-
-            list.add(json.getString("cCode"));
-            if (isRepeat()){
-                Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
-                etDjtm.setText("");
-                list.clear();
-            } else {
-                tb_zhtm.removeAllViews();
-                num=1;
-                tableview_zhtm();
+        for(int i=0;i<jsonArray.length();i++) {
+            JSONObject info = jsonArray.getJSONObject(i);
+            //etCkbm如果为空，就是第一次扫码，不需要判断
+            if (etCkbm.getText().toString().equals("")) {
                 etDjtm.setText("");
                 etDjtm.setHint(json.getString("cCode"));//单据号
                 etCkbm.setText(json.getString("cWhCode"));//仓库编码
                 etGfbm.setText(json.getString("cVenCode"));//供方编码
-                RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_djtm, null);
-                vision(info, relativeLayout2);
+
+                RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.table_djtm, null);
+                MyTableTextView1 txt1 = relativeLayout2.findViewById(R.id.list_1_1);
+                txt1.setText(String.valueOf(num));
+                num++;
+                MyTableTextView1 finalTxt = txt1;
+                txt1.setOnClickListener(v -> {
+                    Intent intent2 = new Intent(DocumentActivity.this, BigVerifyActivity.class);
+                    try {
+                        //将获取到的8个表体数据以及行号传过去
+                        intent2.putExtra("Code0", finalTxt.getText().toString());//行号
+                        intent2.putExtra("cInvCode", info.getString("cInvCode"));//代号
+                        intent2.putExtra("cinvname", info.getString("cinvname"));//牌号
+                        intent2.putExtra("cEngineerFigNo", info.getString("cEngineerFigNo"));//图号
+                        intent2.putExtra("cFree9", info.getString("cFree9"));//生产批号
+                        intent2.putExtra("iQuantity", info.getString("iQuantity"));//数量
+                        intent2.putExtra("iNum", info.getString("iNum"));//件数
+                        intent2.putExtra("cFree2", info.getString("cFree2"));//带材批号
+                        intent2.putExtra("cFree1", info.getString("cFree1"));//材料编号
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    startActivity(intent2);
+                });
+                txt1.setFocusableInTouchMode(false);
+
+                txt1 = relativeLayout2.findViewById(R.id.list_1_2);
+                txt1.setText(info.getString("cInvCode"));
+                txt1.setFocusableInTouchMode(false);
+
+                txt1 = relativeLayout2.findViewById(R.id.list_1_3);
+                txt1.setText(info.getString("cinvname"));
+                txt1.setFocusableInTouchMode(false);
+
+                txt1 = relativeLayout2.findViewById(R.id.list_1_4);
+                txt1.setText(info.getString("cEngineerFigNo"));
+                txt1.setFocusableInTouchMode(false);
+
+                txt1 = relativeLayout2.findViewById(R.id.list_1_5);
+                txt1.setText(info.getString("cFree9"));
+                txt1.setFocusableInTouchMode(false);
+
+                txt1 = relativeLayout2.findViewById(R.id.list_1_6);
+                txt1.setText(info.getString("iQuantity"));
+                txt1.setFocusableInTouchMode(false);
+
+                txt1 = relativeLayout2.findViewById(R.id.list_1_7);
+                txt1.setText(info.getString("iNum"));
+                txt1.setFocusableInTouchMode(false);
+
+                txt1 = relativeLayout2.findViewById(R.id.list_1_8);
+                txt1.setText(info.getString("cFree2"));
+                txt1.setFocusableInTouchMode(false);
+
+                txt1 = relativeLayout2.findViewById(R.id.list_1_9);
+                txt1.setText(info.getString("cFree1"));
+                txt1.setFocusableInTouchMode(false);
                 tb_zhtm.addView(relativeLayout2);
-                list.add(json.getString("cCode"));//单据号
+                list.add(json.getString("AutoID"));
                 list1.add(list.get(0));
                 list.clear();
+            } else {
+
+                list.add(json.getString("AutoID"));
+                if (isRepeat()) {
+                    Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
+                    etDjtm.setText("");
+                    list.clear();
+                } else {
+                    //tb_zhtm.removeAllViews();
+                    num = 1;
+                    tableview_zhtm();
+                    etDjtm.setText("");
+                    etDjtm.setHint(json.getString("cCode"));//单据号
+                    etCkbm.setText(json.getString("cWhCode"));//仓库编码
+                    etGfbm.setText(json.getString("cVenCode"));//供方编码
+                    RelativeLayout relativeLayout2 = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.table_djtm, null);
+                    MyTableTextView1 txt1 = relativeLayout2.findViewById(R.id.list_1_1);
+                    txt1.setText(String.valueOf(num));
+                    num++;
+                    MyTableTextView1 finalTxt = txt1;
+                    txt1.setOnClickListener(v -> {
+                        Intent intent2 = new Intent(DocumentActivity.this, BigVerifyActivity.class);
+                        try {
+                            //将获取到的8个表体数据以及行号传过去
+                            intent2.putExtra("Code0", finalTxt.getText().toString());//行号
+                            intent2.putExtra("cInvCode", info.getString("cInvCode"));//代号
+                            intent2.putExtra("cinvname", info.getString("cinvname"));//牌号
+                            intent2.putExtra("cEngineerFigNo", info.getString("cEngineerFigNo"));//图号
+                            intent2.putExtra("cFree9", info.getString("cFree9"));//生产批号
+                            intent2.putExtra("iQuantity", info.getString("iQuantity"));//数量
+                            intent2.putExtra("iNum", info.getString("iNum"));//件数
+                            intent2.putExtra("cFree2", info.getString("cFree2"));//带材批号
+                            intent2.putExtra("cFree1", info.getString("cFree1"));//材料编号
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        startActivity(intent2);
+                    });
+                    txt1.setFocusableInTouchMode(false);
+
+                    txt1 = relativeLayout2.findViewById(R.id.list_1_2);
+                    txt1.setText(info.getString("cInvCode"));
+                    txt1.setFocusableInTouchMode(false);
+
+                    txt1 = relativeLayout2.findViewById(R.id.list_1_3);
+                    txt1.setText(info.getString("cinvname"));
+                    txt1.setFocusableInTouchMode(false);
+
+                    txt1 = relativeLayout2.findViewById(R.id.list_1_4);
+                    txt1.setText(info.getString("cEngineerFigNo"));
+                    txt1.setFocusableInTouchMode(false);
+
+                    txt1 = relativeLayout2.findViewById(R.id.list_1_5);
+                    txt1.setText(info.getString("cFree9"));
+                    txt1.setFocusableInTouchMode(false);
+
+                    txt1 = relativeLayout2.findViewById(R.id.list_1_6);
+                    txt1.setText(info.getString("iQuantity"));
+                    txt1.setFocusableInTouchMode(false);
+
+                    txt1 = relativeLayout2.findViewById(R.id.list_1_7);
+                    txt1.setText(info.getString("iNum"));
+                    txt1.setFocusableInTouchMode(false);
+
+                    txt1 = relativeLayout2.findViewById(R.id.list_1_8);
+                    txt1.setText(info.getString("cFree2"));
+                    txt1.setFocusableInTouchMode(false);
+
+                    txt1 = relativeLayout2.findViewById(R.id.list_1_9);
+                    txt1.setText(info.getString("cFree1"));
+                    txt1.setFocusableInTouchMode(false);
+                    tb_zhtm.addView(relativeLayout2);
+                    list.add(json.getString("AutoID"));//单据号
+                    list1.add(list.get(0));
+                    list.clear();
+                }
             }
         }
     }
@@ -237,37 +347,36 @@ public class DocumentActivity extends AppCompatActivity {
             txt1 = relativeLayout2.findViewById(R.id.list_1_9);
             txt1.setText(info.getString("cFree1"));
             txt1.setFocusableInTouchMode(false);
+//        }
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void init() {
         mContext = DocumentActivity.this;
-        bt_hd.setOnClickListener(v -> {
-//				//TODO 核对并弹出对话框
-
-        });
-        bt_hd.setOnTouchListener((v, event) -> {
+        bt_ok.setOnClickListener(v -> load());
+        bt_ok.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                bt_hd.setBackgroundResource(R.drawable.button_pressed);
+                bt_ok.setBackgroundResource(R.drawable.button_pressed);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                bt_hd.setBackgroundResource(R.drawable.blue_button);
+                bt_ok.setBackgroundResource(R.drawable.blue_button);
             }
             return false;
         });
-        bt_jx.setOnClickListener(v -> {
-            Intent intent = new Intent(DocumentActivity.this, SmallVerifyActivity.class);
-            finish();
-            startActivity(intent);
-        });
-
-        bt_jx.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                bt_jx.setBackgroundResource(R.drawable.button_pressed);
-            } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                bt_jx.setBackgroundResource(R.drawable.blue_button);
-            }
-            return false;
-        });
+//        bt_jx.setOnClickListener(v -> {
+//            Intent intent = new Intent(DocumentActivity.this, SmallVerifyActivity.class);
+//            finish();
+//            startActivity(intent);
+//        });
+//
+//        bt_jx.setOnTouchListener((v, event) -> {
+//            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                bt_jx.setBackgroundResource(R.drawable.button_pressed);
+//            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+//                bt_jx.setBackgroundResource(R.drawable.blue_button);
+//            }
+//            return false;
+//        });
 
         top_back.setOnClickListener(v -> {
             Intent intent = new Intent(DocumentActivity.this, MainActivity.class);
@@ -292,7 +401,7 @@ public class DocumentActivity extends AppCompatActivity {
                     handler_zhtm.removeCallbacks(delayRun_zhtm);
                 }
                 et_str_zhtm = s.toString();
-                handler_zhtm.postDelayed(delayRun_zhtm, 800);
+//                handler_zhtm.postDelayed(delayRun_zhtm, 800);
             }
         });
 

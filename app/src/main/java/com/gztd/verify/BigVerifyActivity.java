@@ -162,7 +162,7 @@ public class BigVerifyActivity extends AppCompatActivity {
         //这里判断是否匹配
         if (str1 != null) {
             if (mcInvCode.equals(cInvCode) &&
-//                    mcFree1.equals(cFree1) &&
+                    mcFree1.equals(cFree1) &&
                     tvNum.getText().toString().equals(iNum) &&
                     tvQuantity.getText().toString().equals(iQuantity) &&
                     mcFree2.equals(cFree2) &&
@@ -209,76 +209,76 @@ public class BigVerifyActivity extends AppCompatActivity {
             });
 
             txt = relativeLayout1.findViewById(R.id.list_1_2);
-            txt.setText(list.get(0));
+            txt.setText(list.get(1));
             txt.setFocusableInTouchMode(false);
 
             txt = relativeLayout1.findViewById(R.id.list_1_3);
-            txt.setText(list.get(1));
+            txt.setText(list.get(2));
             txt.setFocusableInTouchMode(false);
             intent3.putExtra("cInvCode", txt.getText().toString());//代号
             mcInvCode = txt.getText().toString();
 
             txt = relativeLayout1.findViewById(R.id.list_1_4);
-            txt.setText(list.get(2));
+            txt.setText(list.get(3));
             txt.setFocusableInTouchMode(false);
             intent3.putExtra("iQuantity", txt.getText().toString());//重量
 
             txt = relativeLayout1.findViewById(R.id.list_1_5);
-            txt.setText(list.get(3));
+            txt.setText(list.get(4));
             txt.setFocusableInTouchMode(false);
             intent3.putExtra("iNum", txt.getText().toString());//件数
 
             txt = relativeLayout1.findViewById(R.id.list_1_6);
-            txt.setText(list.get(4));
+            txt.setText(list.get(5));
             txt.setFocusableInTouchMode(false);
             intent3.putExtra("cFree1", txt.getText().toString());
             mcFree1 = txt.getText().toString();
 
             txt = relativeLayout1.findViewById(R.id.list_1_7);
-            txt.setText(list.get(5));
+            txt.setText(list.get(6));
             txt.setFocusableInTouchMode(false);
             intent3.putExtra("cFree2", txt.getText().toString());
             mcFree2 = txt.getText().toString();
 
 
             txt = relativeLayout1.findViewById(R.id.list_1_8);
-            txt.setText(list.get(6));
+            txt.setText(list.get(7));
             txt.setFocusableInTouchMode(false);
             intent3.putExtra("Code3", txt.getText().toString());
 
             txt = relativeLayout1.findViewById(R.id.list_1_9);
-            txt.setText(list.get(7));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("Code4", txt.getText().toString());
-
-            txt = relativeLayout1.findViewById(R.id.list_1_10);
             txt.setText(list.get(8));
             txt.setFocusableInTouchMode(false);
             intent3.putExtra("Code4", txt.getText().toString());
 
-            txt = relativeLayout1.findViewById(R.id.list_1_11);
+            txt = relativeLayout1.findViewById(R.id.list_1_10);
             txt.setText(list.get(9));
             txt.setFocusableInTouchMode(false);
             intent3.putExtra("Code4", txt.getText().toString());
 
-            txt = relativeLayout1.findViewById(R.id.list_1_12);
+            txt = relativeLayout1.findViewById(R.id.list_1_11);
             txt.setText(list.get(10));
             txt.setFocusableInTouchMode(false);
             intent3.putExtra("Code4", txt.getText().toString());
 
-            txt = relativeLayout1.findViewById(R.id.list_1_13);
+            txt = relativeLayout1.findViewById(R.id.list_1_12);
             txt.setText(list.get(11));
             txt.setFocusableInTouchMode(false);
             intent3.putExtra("Code4", txt.getText().toString());
 
-            txt = relativeLayout1.findViewById(R.id.list_1_14);
+            txt = relativeLayout1.findViewById(R.id.list_1_13);
             txt.setText(list.get(12));
+            txt.setFocusableInTouchMode(false);
+            intent3.putExtra("Code4", txt.getText().toString());
+
+            txt = relativeLayout1.findViewById(R.id.list_1_14);
+            txt.setText(list.get(13));
             txt.setFocusableInTouchMode(false);
             intent3.putExtra("cFree9", txt.getText().toString());
             mcFree9 = txt.getText().toString();
 
             txt = relativeLayout1.findViewById(R.id.list_1_15);
-            txt.setText(list.get(13));
+            txt.setText(list.get(14));
             txt.setFocusableInTouchMode(false);
             intent3.putExtra("Code4", txt.getText().toString());
 

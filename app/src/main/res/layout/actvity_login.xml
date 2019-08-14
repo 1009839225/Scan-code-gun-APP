@@ -43,7 +43,7 @@
             android:hint="请输入用户ID"
             android:singleLine="true">
 
-            <requestFocus />
+
         </EditText>
     </LinearLayout>
 
@@ -71,7 +71,10 @@
             android:ems="10"
             android:hint="请输入密码"
             android:inputType="textPassword"
-            android:singleLine="true" />
+            android:singleLine="true" >
+
+            <requestFocus />
+        </EditText>
     </LinearLayout>
 
     <LinearLayout

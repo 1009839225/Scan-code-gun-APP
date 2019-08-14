@@ -27,6 +27,7 @@ import com.pedaily.yc.ycdialoglib.utils.DialogUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -177,7 +178,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
             num = list.get(2);
             list1.add(list.get(0));
             list.clear();
-            
+
             //扫码次数合计
             tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));
 
@@ -262,7 +263,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
         mContext = SmallVerifyActivity.this;
         et_wlbq = findViewById(R.id.et_wlbq);
         tb_wlbq = findViewById(R.id.tb_wlbq);
-        bt_hd = findViewById(R.id.bt_hd);
+        bt_hd = findViewById(R.id.bt_ok);
         bt_hd.setOnClickListener(v -> checkMatch());
 
         bt_hd.setOnTouchListener((v, event) -> {
@@ -328,9 +329,12 @@ public class SmallVerifyActivity extends AppCompatActivity {
     public void indata() {
         String str = et_wlbq.getText().toString();
         StringTokenizer st = new StringTokenizer(str, "\\^");
-        while (st.hasMoreTokens()) {
-            list.add(st.nextToken());
-        }
+//        while (st.hasMoreTokens()) {
+//            list.add(st.nextToken());
+//        }
+
+        String[] split = str.split("\\^");
+        list.addAll(Arrays.asList(split));
 
         et_wlbq.setText("");
         str1 = list.get(0);

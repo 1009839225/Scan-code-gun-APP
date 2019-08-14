@@ -179,7 +179,7 @@ public class BigVerifyActivity extends Activity {
     private void init() {
         et_zhtm = findViewById(R.id.et_zhtm);
         tb_zhtm = findViewById(R.id.tb_zhtm);
-        bt_hd = findViewById(R.id.bt_hd);
+        bt_hd = findViewById(R.id.bt_ok);
         bt_hd.setOnClickListener(v -> {
             //TODO 核对并弹出对话框
             Toast.makeText(BigVerifyActivity.this, "此处要核对，功能建设中...", Toast.LENGTH_SHORT).show();
