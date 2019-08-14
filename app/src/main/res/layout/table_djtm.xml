@@ -18,7 +18,7 @@
         android:focusable="false"
         android:id="@+id/list_1_2"
         android:layout_width="120dp"
-        android:layout_height="35dp"
+        android:layout_height="45dp"
         android:layout_toRightOf="@+id/list_1_1"
         android:gravity="center"
         android:textColor="#000"
