@@ -163,10 +163,10 @@ public class BigVerifyActivity extends AppCompatActivity {
         if (str1 != null) {
             if (mcInvCode.equals(cInvCode) &&
                     mcFree1.equals(cFree1) &&
-                    tvNum.getText().toString().equals(iNum) &&
-                    tvQuantity.getText().toString().equals(iQuantity) &&
-                    mcFree2.equals(cFree2) &&
-                    mcFree9.equals(cFree9)) {
+//                    tvNum.getText().toString().equals(iNum) &&
+//                    tvQuantity.getText().toString().equals(iQuantity) &&
+//                    mcFree2.equals(cFree2) &&
+                    mcFree9.equals(cFree9) ) {
                 CustomDialogFragment
                         .create(getSupportFragmentManager())
                         .setTitle("系统提示：")
@@ -282,8 +282,8 @@ public class BigVerifyActivity extends AppCompatActivity {
             txt.setFocusableInTouchMode(false);
             intent3.putExtra("Code4", txt.getText().toString());
 
-            quantity = list.get(2);
-            num = list.get(3);
+            quantity = list.get(3);
+            num = list.get(4);
             list1.add(list.get(0));
             list.clear();
             //扫码次数合计
