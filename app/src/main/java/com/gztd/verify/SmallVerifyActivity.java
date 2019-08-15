@@ -29,7 +29,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,8 +56,8 @@ public class SmallVerifyActivity extends AppCompatActivity {
     List<String> list = new ArrayList<>();
     List<String> list1 = new ArrayList<>();
     private Context mContext;
-    private String[] name_wlbq = {"代号", "重量", "件数", "自由项1", "自由项2", "自由项3", "自由项4",
-            "自由项5", "自由项6", "自由项7", "自由项8", "自由项9", "自由项10"};
+    private String[] name_wlbq = {"代号", "数量", "件数", "材料编号", "带材批号", "自由项3", "自由项4",
+            "自由项5", "自由项6", "自由项7", "自由项8", "生产批号", "自由项10"};
 
     private String et_str_wlbq;
 
@@ -137,7 +136,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
             mcFree1 = txt.getText().toString();
 
             txt = relativeLayout1.findViewById(R.id.list_1_5);
-            txt.setText(list.get(4));
+            txt.setText(list.get(11));
             txt.setFocusableInTouchMode(false);
             mcFree2 = txt.getText().toString();
 
@@ -166,7 +165,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
             txt.setFocusableInTouchMode(false);
 
             txt = relativeLayout1.findViewById(R.id.list_1_12);
-            txt.setText(list.get(11));
+            txt.setText(list.get(4));
             txt.setFocusableInTouchMode(false);
             mcFree9 = txt.getText().toString();
 
@@ -226,9 +225,9 @@ public class SmallVerifyActivity extends AppCompatActivity {
         //这里判断是否匹配
         if (str1 != null) {
             if (mcInvCode.equals(cInvCode) &&
-                    mcFree1.equals(cFree1) &&
+//                    mcFree1.equals(cFree1) &&
                     tvNum.getText().toString().equals(iNum) &&
-                    tvQuantity.getText().toString().equals(iQuantity) &&
+//                    tvQuantity.getText().toString().equals(iQuantity) &&
                     mcFree2.equals(cFree2) &&
                     mcFree9.equals(cFree9)) {
                 CustomDialogFragment
@@ -328,7 +327,7 @@ public class SmallVerifyActivity extends AppCompatActivity {
     //返回扫码数据的方法
     public void indata() {
         String str = et_wlbq.getText().toString();
-        StringTokenizer st = new StringTokenizer(str, "\\^");
+//        StringTokenizer st = new StringTokenizer(str, "\\^");
 //        while (st.hasMoreTokens()) {
 //            list.add(st.nextToken());
 //        }

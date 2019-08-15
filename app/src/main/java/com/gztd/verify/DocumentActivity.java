@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -55,10 +56,11 @@ public class DocumentActivity extends AppCompatActivity {
     @BindView(R.id.et_gfbm)
     EditText etGfbm;
 
+    private String result;
     private Context mContext;
     private String beforeresult;
     private String str1;
-    private String[] name_zhtm = {"行号","代号", "牌号", "图号", "生产批号", "数量", "件数", "带材批号", "材料编号"};
+    private String[] name_zhtm = {"行号","代号", "牌号", "图号", "生产批号", "数量", "件数", "带材批号", "材料编号" , "已核对件数"};
     List<String> list = new ArrayList<>();
     List<String> list1 = new ArrayList<>();
     private Handler handler_zhtm = new Handler();
@@ -120,7 +122,6 @@ public class DocumentActivity extends AppCompatActivity {
                 String main = info1.getString("Main");// 表头
                 String details = info1.getString("Details");// 表体
                 JSONArray jsonArray = new JSONArray(main);
-//                JSONArray jsonArray1 = new JSONArray(details);
                 if (jsonArray.length() != 0) {
                     indata(main,details);
                 } else {
@@ -172,7 +173,7 @@ public class DocumentActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    startActivity(intent2);
+                    startActivityForResult(intent2,1);
                 });
                 txt1.setFocusableInTouchMode(false);
 
@@ -236,7 +237,7 @@ public class DocumentActivity extends AppCompatActivity {
                         //将获取到的8个表体数据以及行号传过去
                         intent2.putExtra("Code0", finalTxt.getText().toString());//行号
 
-                        startActivity(intent2);
+                        startActivityForResult(intent2,1);
                     });
                     txt1.setFocusableInTouchMode(false);
 
@@ -280,8 +281,12 @@ public class DocumentActivity extends AppCompatActivity {
                     txt1.setFocusableInTouchMode(false);
                     intent2.putExtra("cFree1", txt1.getText().toString());//材料编号
 
+                    txt1 = relativeLayout2.findViewById(R.id.list_1_10);
+                    txt1.setText(result);
+                    txt1.setFocusableInTouchMode(false);
+
                     tb_zhtm.addView(relativeLayout2);
-                    list.add(info.getString("AutoID"));//单据号
+                    list.add(info.getString("AutoID"));
                     list1.add(list.get(0));
                     list.clear();
                 }
@@ -345,6 +350,8 @@ public class DocumentActivity extends AppCompatActivity {
             txt1 = relativeLayout2.findViewById(R.id.list_1_9);
             txt1.setText(info.getString("cFree1"));
             txt1.setFocusableInTouchMode(false);
+
+
 //        }
 
     }
@@ -457,6 +464,10 @@ public class DocumentActivity extends AppCompatActivity {
         title.setText(name_zhtm[8]);
         title.setTextColor(getResources().getColor(R.color.tabletext_black));
         title.setFocusableInTouchMode(false);
+        title = rl_zhtm.findViewById(R.id.list_1_10);
+        title.setText(name_zhtm[9]);
+        title.setTextColor(getResources().getColor(R.color.tabletext_black));
+        title.setFocusableInTouchMode(false);
 
         tb_zhtm.addView(rl_zhtm);
     }
@@ -466,5 +477,12 @@ public class DocumentActivity extends AppCompatActivity {
         Intent intent = new Intent(DocumentActivity.this, MainActivity.class);
         finish();
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (data != null) {
+            result = data.getExtras().getString("result");//得到新Activity 关闭后返回的数据
+        }
     }
 }

@@ -68,7 +68,7 @@ public class BigVerifyActivity extends AppCompatActivity {
     private String num,quantity;
     private int number = 1;
     private String str1;
-    private String[] name_zhtm = {"行号", "唯一编号", "代号", "重量", "件数", "自由项1", "带材批号", "自由项3", "自由项4",
+    private String[] name_zhtm = {"行号", "唯一编号", "代号", "数量", "件数", "自由项1", "带材批号", "自由项3", "自由项4",
             "自由项5", "自由项6", "自由项7", "自由项8", "生产批号", "自由项10"};
 
     private Handler handler_zhtm = new Handler();
@@ -163,9 +163,9 @@ public class BigVerifyActivity extends AppCompatActivity {
         if (str1 != null) {
             if (mcInvCode.equals(cInvCode) &&
                     mcFree1.equals(cFree1) &&
-//                    tvNum.getText().toString().equals(iNum) &&
+                    tvNum.getText().toString().equals(iNum) &&
 //                    tvQuantity.getText().toString().equals(iQuantity) &&
-//                    mcFree2.equals(cFree2) &&
+                    mcFree2.equals(cFree2) &&
                     mcFree9.equals(cFree9) ) {
                 CustomDialogFragment
                         .create(getSupportFragmentManager())
@@ -181,6 +181,7 @@ public class BigVerifyActivity extends AppCompatActivity {
                         .create(getSupportFragmentManager())
                         .setTitle("系统提示：")
                         .setContent("当前数据不匹配，请检查！")
+//                        .setContent("当前数据不匹配，请检查！\n" + "当前代号：" + mcInvCode + "当前材料编号：\n" + mcFree1 + "当前带材批号：\n" + mcFree2 + "当前生产批号：\n" + mcFree9)
                         .setDimAmount(0.2f)
                         .setTag("dialog")
                         .setCancelOutside(true)
@@ -195,117 +196,131 @@ public class BigVerifyActivity extends AppCompatActivity {
 
     private void vision(RelativeLayout relativeLayout1) {
         //判断不重复
-        if (!isRepeat()) {
-            MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
-            txt.setText(String.valueOf(number));
-            number++;
-            txt.setFocusableInTouchMode(false);
+        if (list.get(6).equals(cFree9)){
+            if (!isRepeat()) {
+                MyTableTextView1 txt = relativeLayout1.findViewById(R.id.list_1_1);
+                txt.setText(String.valueOf(number));
+                number++;
+                txt.setFocusableInTouchMode(false);
 
-            MyTableTextView1 finalTxt = txt;
-            Intent intent3 = new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
-            txt.setOnClickListener(v -> {
-                intent3.putExtra("Code0", finalTxt.getText().toString());//行号
-                startActivity(intent3);
-            });
+                MyTableTextView1 finalTxt = txt;
+                Intent intent3 = new Intent(BigVerifyActivity.this, SmallVerifyActivity.class);
+                txt.setOnClickListener(v -> {
+                    intent3.putExtra("Code0", finalTxt.getText().toString());//行号
+                    startActivity(intent3);
+                });
 
-            txt = relativeLayout1.findViewById(R.id.list_1_2);
-            txt.setText(list.get(1));
-            txt.setFocusableInTouchMode(false);
+                txt = relativeLayout1.findViewById(R.id.list_1_2);
+                txt.setText(list.get(1));
+                txt.setFocusableInTouchMode(false);
 
-            txt = relativeLayout1.findViewById(R.id.list_1_3);
-            txt.setText(list.get(2));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("cInvCode", txt.getText().toString());//代号
-            mcInvCode = txt.getText().toString();
+                txt = relativeLayout1.findViewById(R.id.list_1_3);
+                txt.setText(list.get(2));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("cInvCode", txt.getText().toString());//代号
+                mcInvCode = txt.getText().toString();
 
-            txt = relativeLayout1.findViewById(R.id.list_1_4);
-            txt.setText(list.get(3));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("iQuantity", txt.getText().toString());//重量
+                txt = relativeLayout1.findViewById(R.id.list_1_4);
+                txt.setText(list.get(3));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("iQuantity", txt.getText().toString());//重量
 
-            txt = relativeLayout1.findViewById(R.id.list_1_5);
-            txt.setText(list.get(4));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("iNum", txt.getText().toString());//件数
+                txt = relativeLayout1.findViewById(R.id.list_1_5);
+                txt.setText(list.get(4));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("iNum", txt.getText().toString());//件数
 
-            txt = relativeLayout1.findViewById(R.id.list_1_6);
-            txt.setText(list.get(5));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("cFree1", txt.getText().toString());
-            mcFree1 = txt.getText().toString();
+                txt = relativeLayout1.findViewById(R.id.list_1_6);
+                txt.setText(list.get(5));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("cFree1", txt.getText().toString());
+                mcFree1 = txt.getText().toString();
 
-            txt = relativeLayout1.findViewById(R.id.list_1_7);
-            txt.setText(list.get(6));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("cFree2", txt.getText().toString());
-            mcFree2 = txt.getText().toString();
+                txt = relativeLayout1.findViewById(R.id.list_1_7);
+                txt.setText(list.get(13));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("cFree2", txt.getText().toString());
+                mcFree2 = txt.getText().toString();
 
+                txt = relativeLayout1.findViewById(R.id.list_1_8);
+                txt.setText(list.get(7));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code3", txt.getText().toString());
 
-            txt = relativeLayout1.findViewById(R.id.list_1_8);
-            txt.setText(list.get(7));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("Code3", txt.getText().toString());
+                txt = relativeLayout1.findViewById(R.id.list_1_9);
+                txt.setText(list.get(8));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code4", txt.getText().toString());
 
-            txt = relativeLayout1.findViewById(R.id.list_1_9);
-            txt.setText(list.get(8));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("Code4", txt.getText().toString());
+                txt = relativeLayout1.findViewById(R.id.list_1_10);
+                txt.setText(list.get(9));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code4", txt.getText().toString());
 
-            txt = relativeLayout1.findViewById(R.id.list_1_10);
-            txt.setText(list.get(9));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("Code4", txt.getText().toString());
+                txt = relativeLayout1.findViewById(R.id.list_1_11);
+                txt.setText(list.get(10));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code4", txt.getText().toString());
 
-            txt = relativeLayout1.findViewById(R.id.list_1_11);
-            txt.setText(list.get(10));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("Code4", txt.getText().toString());
+                txt = relativeLayout1.findViewById(R.id.list_1_12);
+                txt.setText(list.get(11));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code4", txt.getText().toString());
 
-            txt = relativeLayout1.findViewById(R.id.list_1_12);
-            txt.setText(list.get(11));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("Code4", txt.getText().toString());
+                txt = relativeLayout1.findViewById(R.id.list_1_13);
+                txt.setText(list.get(12));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code4", txt.getText().toString());
 
-            txt = relativeLayout1.findViewById(R.id.list_1_13);
-            txt.setText(list.get(12));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("Code4", txt.getText().toString());
+                txt = relativeLayout1.findViewById(R.id.list_1_14);
+                txt.setText(list.get(6));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("cFree9", txt.getText().toString());
+                mcFree9 = txt.getText().toString();
 
-            txt = relativeLayout1.findViewById(R.id.list_1_14);
-            txt.setText(list.get(13));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("cFree9", txt.getText().toString());
-            mcFree9 = txt.getText().toString();
+                txt = relativeLayout1.findViewById(R.id.list_1_15);
+                txt.setText(list.get(14));
+                txt.setFocusableInTouchMode(false);
+                intent3.putExtra("Code4", txt.getText().toString());
 
-            txt = relativeLayout1.findViewById(R.id.list_1_15);
-            txt.setText(list.get(14));
-            txt.setFocusableInTouchMode(false);
-            intent3.putExtra("Code4", txt.getText().toString());
+                quantity = list.get(3);
+                num = list.get(4);
+                list1.add(list.get(0));
+                list.clear();
+                //扫码次数合计
+                tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));
+                //件数的累加
+                double n1 = Double.parseDouble(tvNum.getText().toString());
+                double n2 = Double.parseDouble(num);
+                double res = n1 + n2;
+                DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+                tvNum.setText(String.valueOf(decimalFormat.format(res)));
 
-            quantity = list.get(3);
-            num = list.get(4);
-            list1.add(list.get(0));
-            list.clear();
-            //扫码次数合计
-            tvCount.setText(String.valueOf(Integer.valueOf(tvCount.getText().toString()) + 1));
-            //件数的累加
-            double n1 = Double.parseDouble(tvNum.getText().toString());
-            double n2 = Double.parseDouble(num);
-            double res = n1 + n2;
-            DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
-            tvNum.setText(String.valueOf(decimalFormat.format(res)));
-
-            //数量的累加
-            double n3 = Double.parseDouble(tvQuantity.getText().toString());
-            double n4 = Double.parseDouble(quantity);
-            double res1 = n3 + n4;
-            DecimalFormat decimalFormat1 = new DecimalFormat("###################.###########");
-            tvQuantity.setText(String.valueOf(decimalFormat1.format(res1)));
-        } else {
-            Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
+                //数量的累加
+                double n3 = Double.parseDouble(tvQuantity.getText().toString());
+                double n4 = Double.parseDouble(quantity);
+                double res1 = n3 + n4;
+                DecimalFormat decimalFormat1 = new DecimalFormat("###################.###########");
+                tvQuantity.setText(String.valueOf(decimalFormat1.format(res1)));
+            } else {
+                Toast.makeText(mContext, "不能重复扫码", Toast.LENGTH_SHORT).show();
+                relativeLayout1.removeAllViews();
+                list.clear();
+            }
+        }else {
+            CustomDialogFragment
+                    .create(getSupportFragmentManager())
+                    .setTitle("系统提示：")
+                    .setContent("生产批号不同，不允许扫码")
+                    .setDimAmount(0.2f)
+                    .setTag("dialog")
+                    .setCancelOutside(true)
+                    .setOkListener(v -> CustomDialogFragment.dismissDialogFragment())
+                    .show();
             relativeLayout1.removeAllViews();
             list.clear();
         }
+
 
     }
 
@@ -476,6 +491,15 @@ public class BigVerifyActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+        //数据是使用Intent返回
+        Intent intent = new Intent();
+        //把返回数据存入Intent
+        intent.putExtra("result", tvNum.getText().toString());
+        //设置返回数据
+        BigVerifyActivity.this.setResult(1, intent);//RESULT_OK为自定义常量
         finish();
     }
 }
+
+
