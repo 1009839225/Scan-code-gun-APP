@@ -481,8 +481,10 @@ public class DocumentActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (data != null) {
-            result = data.getExtras().getString("result");//得到新Activity 关闭后返回的数据
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1) {
+            result = data.getStringExtra("result");
+//            textView1.setText(message);
         }
     }
 }

@@ -351,7 +351,13 @@ public class BigVerifyActivity extends AppCompatActivity {
 //            return false;
 //        });
 
-        top_back.setOnClickListener(v -> finish());
+        top_back.setOnClickListener(v -> {//数据是使用Intent返回
+            Intent intent = new Intent();
+            //把返回数据存入Intent
+            intent.putExtra("result", tvNum.getText().toString());
+            //设置返回数据
+            setResult(1, intent);
+            finish();});
 
         // 入库单号的扫描监听
         etRkdh.addTextChangedListener(new TextWatcher() {
@@ -497,7 +503,7 @@ public class BigVerifyActivity extends AppCompatActivity {
         //把返回数据存入Intent
         intent.putExtra("result", tvNum.getText().toString());
         //设置返回数据
-        BigVerifyActivity.this.setResult(1, intent);//RESULT_OK为自定义常量
+        setResult(1, intent);
         finish();
     }
 }
